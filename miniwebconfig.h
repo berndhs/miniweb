@@ -31,17 +31,17 @@ public:
    void Read ();
    void Write ();
    
-   QString FeedListFile() { return feedListFile; }
+   QString BookMarkFile() { return bookMarkFile; }
    QString ConfigFile()   { return configFile; }
-   bool    Analog () { return analog; }
+   QString UserAgentFile() { return userAgentFile; }
    bool    Changed () { return changed; }
    bool    SaveOnExit () { return saveonexit; }
    int     StoryTextSize () { return storytextsize; }
    
  
-   void SetFeedListFile (QString f) { feedListFile = f;}
+   void SetBookMarkFile (QString f) { bookMarkFile = f;}
    void SetConfigFile   (QString cf) { configFile = cf; }
-   void SetAnalog  (const bool show) { analog = show; }
+   void SetUserAgentFile (QString uaf) { userAgentFile = uaf; }
    void SetChanged (const bool c)    { changed = c; }
    void SetSaveOnExit (const bool soe) { saveonexit = soe; }
    void SetStoryTextSize (const int sz) { storytextsize = sz; }
@@ -52,9 +52,9 @@ public:
 
 private:
 
-   QString feedListFile;
+   QString bookMarkFile;
    QString configFile;
-   bool    analog;
+   QString userAgentFile;
    bool    changed;
    bool    saveonexit;
    bool    running;

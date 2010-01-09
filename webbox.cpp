@@ -45,13 +45,7 @@ WebBox::WebBox ()
   DisableNewUrl ();
   
 }
-#if 0
-WebBox::WebBox ()
-{}
-#endif
-WebBox::~WebBox ()
-{
-}
+
 
 void
 WebBox::update ()

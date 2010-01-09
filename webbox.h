@@ -28,7 +28,6 @@ Q_OBJECT
 public:
 
   WebBox ();
-  ~WebBox ();
   
   void SetApp (QApplication * papp) { pApp = papp;}
   
@@ -50,9 +49,6 @@ public slots:
   void LoadStarted ();
   
 private:
-#if 0
-  WebBox ();
-  #endif
   
   void InitUserMenu ();
   void DisableNewUrl ();

@@ -24,6 +24,7 @@ SetOptions (QApplication &app, CmdOptions & opts)
 {
   opts.AddStringOption ("config", "c", app.tr("configuration file"));
   opts.AddStringOption ("website", "w", app.tr("web page"));
+  opts.AddStringOption ("useragent","u", app.tr("User Agent string"));
 }
 
 int
@@ -56,8 +57,12 @@ main (int argc, char*argv[])
   WebBox web;
   web.SetApp (&App);
   web.show();
-  QString page ("http://google.com");
+  QString page ("about:blank");
   options.SetStringOpt ("website",page);
+  QString userAgent ("Maxwell Smart");
+  options.SetStringOpt ("useragent", userAgent);
+  qDebug () << userAgent;
+  qDebug () << " first char " << userAgent[0];
   web.SetPage (page);
   
   App.exec ();

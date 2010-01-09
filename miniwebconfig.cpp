@@ -19,8 +19,6 @@ namespace miniweb {
 QString MiniwebConfig::doctypetag("miniwebcfg");
 QString MiniwebConfig::filetag   ("feedfile");
 QString MiniwebConfig::useragent ("useragent");
-QString MiniwebConfig::screenwidth ("wide");
-QString MiniwebConfig::screenheight ("high");
 QString MiniwebConfig::soetag   ("saveonexit");
 QString MiniwebConfig::ststag   ("storytextsize");
 QString MiniwebConfig::boolattr ("yesorno");
@@ -33,7 +31,7 @@ MiniwebConfig::MiniwebConfig()
 }
 
 MiniwebConfig::MiniwebConfig (const MiniwebConfig &cfg)
-:feedListFile(cfg.feedListFile),
+:bookMarkFile(cfg.bookMarkFile),
  configFile(cfg.configFile),
  saveonexit(cfg.saveonexit),
  running(false),
@@ -45,9 +43,8 @@ MiniwebConfig::MiniwebConfig (const MiniwebConfig &cfg)
 MiniwebConfig &
 MiniwebConfig::operator= (const MiniwebConfig & cfg)
 {
-  feedListFile = cfg.feedListFile;
+  bookMarkFile = cfg.bookMarkFile;
   configFile = cfg.configFile;
-  analog = cfg.analog;
   saveonexit = cfg.saveonexit;
   running = false;
   storytextsize = cfg.storytextsize;
@@ -59,9 +56,8 @@ void
 MiniwebConfig::SetDefault ()
 {
   QString homedir = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
-  feedListFile = homedir + "/.miniweb_marks.xml";
+  bookMarkFile = homedir + "/.miniweb_marks.xml";
   configFile = homedir + "/.miniweb_cfg.xml";
-  analog = true;
   saveonexit = true;
   storytextsize = 100;
   changed = false;
@@ -85,7 +81,7 @@ MiniwebConfig::Read ()
        el = el.nextSiblingElement()) {
     if (el.tagName() == filetag) {
       if (el.hasAttribute("name")) {
-        SetFeedListFile(el.attribute("name"));
+        SetBookMarkFile(el.attribute("name"));
       }
     } else if (el.tagName () == soetag) {
       SetSaveOnExit (BoolOption(el,boolattr));
@@ -123,7 +119,7 @@ MiniwebConfig::Write ()
   QDomElement el;
   
   el = dom.createElement (filetag);
-  el.setAttribute ("name", FeedListFile());
+  el.setAttribute ("name", BookMarkFile());
   root.appendChild (el);
   
   QString yesorno;
