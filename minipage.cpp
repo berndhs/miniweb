@@ -13,8 +13,9 @@
 
 namespace miniweb {
 
-MiniPage::MiniPage ()
+MiniPage::MiniPage (QObject * parent)
 {
+  setParent (parent);
 }
 
 QString

@@ -21,7 +21,7 @@ class MiniPage : public QWebPage {
 
 public:
 
-   MiniPage ();
+   MiniPage (QObject * parent);
    
    QString userAgentForUrl ( const QUrl & url ) const;
 

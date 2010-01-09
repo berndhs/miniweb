@@ -15,28 +15,36 @@
 
 namespace miniweb {
 
-WebBox::WebBox (QApplication * app)
+WebBox::WebBox ()
 {
   showFrame = true;
-  pApp = app;
+  pApp = 0;
   defaultWinFlags = this->windowFlags();
   
   setupUi (this);
-  webView->setPage (&thePage) ;
+  thePage = new MiniPage (this);
+  webView->setPage (thePage) ;
+  loadingLabel->hide ();
+  failedLabel->hide ();
   
   InitUserMenu ();
   
   connect (theButton, SIGNAL (clicked()), this, SLOT (UserWantsSomething()));
+  connect (webView, SIGNAL (loadFinished (bool)),
+           this, SLOT (LoadDone (bool)));
+  connect (webView, SIGNAL (loadStarted ()), 
+           this, SLOT (LoadStarted ()));
   
   DisableNewUrl ();
   
 }
-
+#if 0
 WebBox::WebBox ()
 {}
-
+#endif
 WebBox::~WebBox ()
-{}
+{
+}
 
 void
 WebBox::update ()
@@ -53,11 +61,30 @@ WebBox::quit ()
 }
 
 void
+WebBox::LoadDone (bool ok)
+{
+  loadingLabel->hide();
+  if (ok) {
+    failedLabel->hide();
+  } else {
+    failedLabel->show();
+  }
+}
+
+void
+WebBox::LoadStarted ()
+{
+  failedLabel->hide();
+  loadingLabel->show();
+}
+
+void
 WebBox::DisableNewUrl ()
 {
   newUrl->hide ();
   disconnect (textOK, 0, 0, 0);
   disconnect (textCancel, 0, 0, 0);
+  disconnect (textEnter, 0, 0, 0);
 }
 
 void
@@ -87,8 +114,19 @@ WebBox::InitUserMenu ()
 void
 WebBox::SetPage (QString url)
 {
-  currentUrl = url;
-  QUrl pageUrl (url);
+  QString newurl (url);
+  if (url.length() == 0) {
+    return;
+  }
+  if (url.indexOf(":") < 0) {
+    newurl.prepend("http://");
+  }
+  if (url == "about:blank") {
+    newurl = QString("qrc:/blank.html");
+  }
+  currentUrl = newurl;
+  QUrl pageUrl (newurl);
+  webView->stop ();
   webView->load (pageUrl);
 }
 
@@ -98,6 +136,7 @@ WebBox::EnableNewUrl ()
   newUrl->show ();
   connect (textCancel, SIGNAL (clicked()), this, SLOT (NewUrlCancel ()) );
   connect (textOK, SIGNAL (clicked()), this, SLOT (NewUrlOk ()));
+  connect (textEnter, SIGNAL (returnPressed()), this, SLOT (NewUrlOk ()));
 }
 
 void

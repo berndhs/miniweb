@@ -167,7 +167,7 @@ CmdOptions::AddOption (const QString longName,
 }
 
 void
-CmdOptions::AddStrOption (const QString longName,
+CmdOptions::AddStringOption (const QString longName,
                           const QString shortName,
                           const QString msg)
 {

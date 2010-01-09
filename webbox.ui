@@ -50,10 +50,10 @@
   <widget class="QGroupBox" name="newUrl">
    <property name="geometry">
     <rect>
-     <x>25</x>
-     <y>190</y>
-     <width>256</width>
-     <height>101</height>
+     <x>0</x>
+     <y>25</y>
+     <width>240</width>
+     <height>100</height>
     </rect>
    </property>
    <property name="title">
@@ -62,9 +62,9 @@
    <widget class="QLineEdit" name="textEnter">
     <property name="geometry">
      <rect>
-      <x>5</x>
+      <x>2</x>
       <y>20</y>
-      <width>246</width>
+      <width>236</width>
       <height>31</height>
      </rect>
     </property>
@@ -85,8 +85,8 @@
    <widget class="QPushButton" name="textCancel">
     <property name="geometry">
      <rect>
-      <x>150</x>
-      <y>65</y>
+      <x>135</x>
+      <y>60</y>
       <width>83</width>
       <height>28</height>
      </rect>
@@ -95,6 +95,80 @@
      <string>Cancel</string>
     </property>
    </widget>
+  </widget>
+  <widget class="QLabel" name="loadingLabel">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>0</y>
+     <width>80</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>80</width>
+     <height>0</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>80</width>
+     <height>16777215</height>
+    </size>
+   </property>
+   <property name="text">
+    <string>loading</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="failedLabel">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>0</y>
+     <width>80</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>80</width>
+     <height>0</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>80</width>
+     <height>16777215</height>
+    </size>
+   </property>
+   <property name="font">
+    <font>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>load failed</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
   </widget>
  </widget>
  <layoutdefault spacing="0" margin="0"/>

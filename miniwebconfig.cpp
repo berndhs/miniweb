@@ -63,7 +63,7 @@ MiniwebConfig::SetDefault ()
   configFile = homedir + "/.miniweb_cfg.xml";
   analog = true;
   saveonexit = true;
-  storytextsize = 85;
+  storytextsize = 100;
   changed = false;
 }
 

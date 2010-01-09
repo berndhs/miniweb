@@ -19,6 +19,13 @@
 
 using namespace miniweb;
 
+void
+SetOptions (QApplication &app, CmdOptions & opts)
+{
+  opts.AddStringOption ("config", "c", app.tr("configuration file"));
+  opts.AddStringOption ("website", "w", app.tr("web page"));
+}
+
 int
 main (int argc, char*argv[])
 {
@@ -28,6 +35,7 @@ main (int argc, char*argv[])
   UseMyOwnMsgHandler();
   
   miniweb::CmdOptions options ("MiniWeb");
+  SetOptions (App,options);
   
   bool optsOk = options.Parse (argc, argv);
   if (!optsOk) {
@@ -45,10 +53,12 @@ main (int argc, char*argv[])
     exit (0);
   }
   
-  WebBox web(&App);
+  WebBox web;
+  web.SetApp (&App);
   web.show();
-  web.SetFrame (false);
-  web.SetPage ("http://google.com");
+  QString page ("http://google.com");
+  options.SetStringOpt ("website",page);
+  web.SetPage (page);
   
   App.exec ();
   

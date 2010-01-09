@@ -26,8 +26,10 @@ Q_OBJECT
 
 public:
 
-  WebBox (QApplication *app);
+  WebBox ();
   ~WebBox ();
+  
+  void SetApp (QApplication * papp) { pApp = papp;}
   
   void SetPage (QString url);
   
@@ -41,17 +43,21 @@ public slots:
   
   void NewUrlOk ();
   void NewUrlCancel ();
+    
+  void LoadDone (bool ok);
+  void LoadStarted ();
   
 private:
-
+#if 0
   WebBox ();
+  #endif
   
   void InitUserMenu ();
   void DisableNewUrl ();
   void EnableNewUrl ();
   
   
-  MiniPage thePage;
+  MiniPage * thePage;
   
   QMenu   userMenu;
   
