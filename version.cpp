@@ -5,7 +5,7 @@
 #include <QTimer>
 
 //
-//  Copyright (C) 2009 - Bernd H Stramm 
+//  Copyright (C) 2010 - Bernd H Stramm 
 //
 // This program is distributed under the terms of 
 // the GNU General Public License version 3 
@@ -17,7 +17,7 @@
 
 namespace miniweb {
 
-  std::string ProgramVersion("0.0");
+  std::string ProgramVersion("0.1");
 
   std::string ProgramName("Miniweb");
   std::string copyright ("Copyright (C) 2010 Bernd H Stramm");
