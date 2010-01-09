@@ -12,6 +12,7 @@
 // of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 //
 #include <QWidget>
+#include <QMenu>
 #include "ui_webbox.h"
 #include "minipage.h"
 
@@ -30,18 +31,40 @@ public:
   
   void SetPage (QString url);
   
+  void SetFrame (const bool frame);
+  
 public slots:
 
+  void UserWantsSomething ();
   void update ();
   void quit   ();
+  
+  void NewUrlOk ();
+  void NewUrlCancel ();
   
 private:
 
   WebBox ();
   
+  void InitUserMenu ();
+  void DisableNewUrl ();
+  void EnableNewUrl ();
+  
+  
   MiniPage thePage;
+  
+  QMenu   userMenu;
+  
+  QAction * userQuit;
+  QAction * userNevermind;
+  QAction * userOpen;
+  QAction * userFrame;
 
   QApplication  * pApp;
+  
+  QString currentUrl;
+  Qt::WindowFlags  defaultWinFlags;
+  bool showFrame;
 
 };
 

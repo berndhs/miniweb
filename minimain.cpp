@@ -47,7 +47,8 @@ main (int argc, char*argv[])
   
   WebBox web(&App);
   web.show();
-  web.SetPage ("http://welt.de");
+  web.SetFrame (false);
+  web.SetPage ("http://google.com");
   
   App.exec ();
   
