@@ -13,6 +13,7 @@
 //
 #include <QWidget>
 #include <QMenu>
+#include <QShortcut>
 #include "ui_webbox.h"
 #include "minipage.h"
 
@@ -43,6 +44,7 @@ public slots:
   
   void NewUrlOk ();
   void NewUrlCancel ();
+  void EnableNewUrl ();
     
   void LoadDone (bool ok);
   void LoadStarted ();
@@ -54,7 +56,6 @@ private:
   
   void InitUserMenu ();
   void DisableNewUrl ();
-  void EnableNewUrl ();
   
   
   MiniPage * thePage;
@@ -71,6 +72,11 @@ private:
   QString currentUrl;
   Qt::WindowFlags  defaultWinFlags;
   bool showFrame;
+  
+  QShortcut  *controlL;
+  QShortcut  *controlO;
+  QShortcut  *controlM;
+  QShortcut  *escapeKey;
 
 };
 

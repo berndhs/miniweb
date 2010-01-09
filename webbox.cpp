@@ -29,6 +29,13 @@ WebBox::WebBox ()
   
   InitUserMenu ();
   
+  controlL = new QShortcut (QKeySequence (tr("Ctrl+L")), this);
+  controlO = new QShortcut (QKeySequence (tr("Ctrl+O")), this);
+  controlM = new QShortcut (QKeySequence (tr("Ctrl+M")), this);
+  escapeKey = new QShortcut (QKeySequence (Qt::Key_Escape), this);
+  connect (controlL, SIGNAL (activated()), this, SLOT (EnableNewUrl()));
+  connect (controlO, SIGNAL (activated()), this, SLOT (EnableNewUrl()));
+  connect (controlM, SIGNAL (activated()), this, SLOT (UserWantsSomething()));
   connect (theButton, SIGNAL (clicked()), this, SLOT (UserWantsSomething()));
   connect (webView, SIGNAL (loadFinished (bool)),
            this, SLOT (LoadDone (bool)));
@@ -84,6 +91,7 @@ WebBox::DisableNewUrl ()
   newUrl->hide ();
   disconnect (textOK, 0, 0, 0);
   disconnect (textCancel, 0, 0, 0);
+  disconnect (escapeKey, 0, 0, 0);
   disconnect (textEnter, 0, 0, 0);
 }
 
@@ -134,7 +142,9 @@ void
 WebBox::EnableNewUrl ()
 {
   newUrl->show ();
-  connect (textCancel, SIGNAL (clicked()), this, SLOT (NewUrlCancel ()) );
+  textEnter->setFocus ();
+  connect (textCancel, SIGNAL (clicked()), this, SLOT (NewUrlCancel ()));
+  connect (escapeKey, SIGNAL (activated()), this, SLOT (NewUrlCancel ()));
   connect (textOK, SIGNAL (clicked()), this, SLOT (NewUrlOk ()));
   connect (textEnter, SIGNAL (returnPressed()), this, SLOT (NewUrlOk ()));
 }

@@ -56,8 +56,14 @@
      <height>100</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
    <property name="title">
-    <string>New Url</string>
+    <string>Enter New Url</string>
    </property>
    <widget class="QLineEdit" name="textEnter">
     <property name="geometry">
