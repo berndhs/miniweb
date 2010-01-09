@@ -58,6 +58,7 @@ MiniwebConfig::SetDefault ()
   QString homedir = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
   bookMarkFile = homedir + "/.miniweb_marks.xml";
   configFile = homedir + "/.miniweb_cfg.xml";
+  userAgentFile = homedir + "/.miniweb_agents.xml";
   saveonexit = true;
   storytextsize = 100;
   changed = false;

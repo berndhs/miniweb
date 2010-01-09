@@ -42,6 +42,9 @@ SOURCES = \
           minipage.cpp \
           webbox.cpp \
           version.cpp \
+          ualist.cpp \
+          useragent.cpp \
+          useragent_ff.cpp \
           miniwebdebug.cpp
           
 
@@ -50,6 +53,9 @@ HEADERS = cmdoptions.h \
           minipage.h \
           webbox.h \
           version.h \
+          ualist.h \
+          useragent.h \
+          useragent_ff.h \
           miniwebdebug.h
           
 
