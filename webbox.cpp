@@ -18,8 +18,11 @@ namespace miniweb {
 WebBox::WebBox ()
 {
   showFrame = true;
+  reloadOn = false;
+  reloadSecs = 0;  // 1 day
   pApp = 0;
   defaultWinFlags = this->windowFlags();
+  effectiveUrl = QUrl("");
   
   setupUi (this);
   thePage = new MiniPage (this);
@@ -28,7 +31,13 @@ WebBox::WebBox ()
   failedLabel->hide ();
   
   InitUserMenu ();
+  InitSettingsMenu ();
   MakeShortcuts ();
+  DisableNewUrl ();
+  DisableSettings ();
+  
+  reloadTimer.setParent (this);
+  reloadTimer.stop ();
   
   connect (theButton, SIGNAL (clicked()), this, SLOT (UserWantsSomething()));
   connect (webView, SIGNAL (loadFinished (bool)),
@@ -36,7 +45,6 @@ WebBox::WebBox ()
   connect (webView, SIGNAL (loadStarted ()), 
            this, SLOT (LoadStarted ()));
   
-  DisableNewUrl ();
   
 }
 
@@ -52,6 +60,7 @@ WebBox::MakeShortcuts ()
   controlR = new QShortcut (QKeySequence (tr("Ctrl+R")), this);
   controlQ = new QShortcut (QKeySequence (tr("Ctrl+Q")), this);
   controlW = new QShortcut (QKeySequence (tr("Ctrl+W")), this);
+  controlS = new QShortcut (QKeySequence (tr("Ctrl+S")), this);
   escapeKey = new QShortcut (QKeySequence (Qt::Key_Escape), this);
   connect (controlB, SIGNAL (activated()), webView, SLOT (back()));
   connect (controlF, SIGNAL (activated()), webView, SLOT (forward()));
@@ -62,6 +71,7 @@ WebBox::MakeShortcuts ()
   connect (controlR, SIGNAL (activated()), webView, SLOT (reload()));
   connect (controlQ, SIGNAL (activated()), this, SLOT (quit()));
   connect (controlW, SIGNAL (activated()), this, SLOT (ToggleFrame()));
+  connect (controlS, SIGNAL (activated()), this, SLOT (SettingsMenu()));
 }
 
 
@@ -140,6 +150,16 @@ WebBox::DisableNewUrl ()
 }
 
 void
+WebBox::DisableSettings ()
+{
+  settBox->hide ();
+  disconnect (settOK, 0, 0, 0);
+  disconnect (settCancel, 0, 0, 0);
+  disconnect (escapeKey, 0, 0, 0);
+  disconnect (settEdit, 0, 0, 0);
+}
+
+void
 WebBox::SetFrame (const bool frame)
 {
   showFrame = frame;
@@ -161,7 +181,15 @@ WebBox::InitUserMenu ()
   userFrame = userMenu.addAction (tr("Frame On/Off"));
   userNevermind = userMenu.addAction (tr("Cancel"));
   userOpen = userMenu.addAction (tr("Open..."));
+  userSettings = userMenu.addAction (tr("Settings..."));
   userHelp = userMenu.addAction (tr("Help..."));
+}
+
+void
+WebBox::InitSettingsMenu ()
+{
+  settReload = settMenu.addAction (tr("Reload Timer"));
+  settNevermind = settMenu.addAction (tr("Cancel"));
 }
 
 void
@@ -187,12 +215,25 @@ void
 WebBox::EnableNewUrl ()
 {
   newUrl->show ();
+  oldUrl->setPlainText(effectiveUrl.toString());
   textEnter->clear ();
   textEnter->setFocus ();
   connect (textCancel, SIGNAL (clicked()), this, SLOT (NewUrlCancel ()));
   connect (escapeKey, SIGNAL (activated()), this, SLOT (NewUrlCancel ()));
   connect (textOK, SIGNAL (clicked()), this, SLOT (NewUrlOk ()));
   connect (textEnter, SIGNAL (returnPressed()), this, SLOT (NewUrlOk ()));
+}
+
+void
+WebBox::EditReload ()
+{
+  settBox->setTitle (tr("Reload Timer (secs)"));
+  settEdit->setText (QString::number (reloadSecs) );
+  settBox->show();
+  connect (settOK, SIGNAL (clicked()), this, SLOT (ReloadSetup()));
+  connect (settCancel, SIGNAL (clicked()), this, SLOT (ReloadNochange()));
+  connect (settEdit, SIGNAL (returnPressed()), this, SLOT (ReloadSetup()));
+  connect (escapeKey, SIGNAL (activated()), this, SLOT (ReloadNochange()));
 }
 
 void
@@ -210,10 +251,32 @@ WebBox::NewUrlCancel ()
 }
 
 void
+WebBox::ReloadSetup ()
+{
+  QString userValue = settEdit->text();
+  DisableSettings ();
+  int userInt = userValue.toLong ();
+  if (userInt < 1) {
+    reloadTimer.stop();
+    disconnect (&reloadTimer, 0, 0, 0);
+    reloadSecs = 0;
+  } else {
+    reloadSecs = userInt;
+    connect (&reloadTimer, SIGNAL (timeout()), this, SLOT (Reload()));
+    reloadTimer.start (reloadSecs * 1000);
+  }
+}
+
+void
+WebBox::ReloadNochange ()
+{
+  DisableSettings ();
+}
+
+void
 WebBox::ToggleFrame ()
 {
   SetFrame (!showFrame);
-  this->setFocus ();
 }
 
 void
@@ -229,8 +292,22 @@ WebBox::UserWantsSomething ()
     EnableNewUrl ();
   } else if (userWants == userFrame) {
     ToggleFrame ();
+  } else if (userWants == userSettings) {
+    SettingsMenu();
   } else if (userWants == userHelp) {
     Help ();
+  }
+}
+
+void
+WebBox::SettingsMenu ()
+{
+  QPoint here = theButton->pos();
+  QAction * userWants = settMenu.exec (mapToGlobal(here));
+  if (userWants == settReload) {
+    EditReload ();
+  } else if (userWants == settNevermind) {
+    return;
   }
 }
 

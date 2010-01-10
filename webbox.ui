@@ -19,6 +19,10 @@
   <property name="windowTitle">
    <string>MiniWeb View</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="miniweb.qrc">
+    <normaloff>:/mwlogo.png</normaloff>:/mwlogo.png</iconset>
+  </property>
   <widget class="QWebView" name="webView">
    <property name="geometry">
     <rect>
@@ -53,7 +57,7 @@
      <x>0</x>
      <y>25</y>
      <width>240</width>
-     <height>100</height>
+     <height>166</height>
     </rect>
    </property>
    <property name="font">
@@ -71,8 +75,14 @@
       <x>2</x>
       <y>20</y>
       <width>236</width>
-      <height>31</height>
+      <height>32</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
     </property>
    </widget>
    <widget class="QPushButton" name="textOK">
@@ -99,6 +109,16 @@
     </property>
     <property name="text">
      <string>Cancel</string>
+    </property>
+   </widget>
+   <widget class="QTextBrowser" name="oldUrl">
+    <property name="geometry">
+     <rect>
+      <x>5</x>
+      <y>110</y>
+      <width>226</width>
+      <height>46</height>
+     </rect>
     </property>
    </widget>
   </widget>
@@ -176,6 +196,67 @@
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
+  <widget class="QGroupBox" name="settBox">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>25</y>
+     <width>236</width>
+     <height>96</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="title">
+    <string>Setting</string>
+   </property>
+   <widget class="QLineEdit" name="settEdit">
+    <property name="geometry">
+     <rect>
+      <x>5</x>
+      <y>20</y>
+      <width>226</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="settOK">
+    <property name="geometry">
+     <rect>
+      <x>15</x>
+      <y>60</y>
+      <width>83</width>
+      <height>28</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>OK</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="settCancel">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>60</y>
+      <width>83</width>
+      <height>28</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Cancel</string>
+    </property>
+   </widget>
+  </widget>
  </widget>
  <layoutdefault spacing="0" margin="0"/>
  <customwidgets>
@@ -185,6 +266,8 @@
    <header>QtWebKit/QWebView</header>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="miniweb.qrc"/>
+ </resources>
  <connections/>
 </ui>

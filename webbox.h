@@ -13,6 +13,7 @@
 //
 #include <QWidget>
 #include <QMenu>
+#include <QTimer>
 #include <QShortcut>
 #include <QSize>
 #include "ui_webbox.h"
@@ -43,6 +44,7 @@ public:
 public slots:
 
   void UserWantsSomething ();
+  void SettingsMenu ();
   void update ();
   void quit   ();
   
@@ -53,13 +55,19 @@ public slots:
   void LoadDone (bool ok);
   void LoadStarted ();
   void Reload ();
+  void ReloadSetup ();
+  void ReloadNochange ();
   void ToggleFrame ();
   void Help ();
   
 private:
   
   void InitUserMenu ();
+  void InitSettingsMenu ();
   void DisableNewUrl ();
+  void DisableSettings ();
+  
+  void EditReload ();
   
   void MakeShortcuts ();
   
@@ -67,12 +75,18 @@ private:
   MiniPage * thePage;
   
   QMenu   userMenu;
+  QMenu   settMenu;
+  QMenu   preMenu;
   
   QAction * userQuit;
   QAction * userNevermind;
   QAction * userOpen;
   QAction * userFrame;
+  QAction * userSettings;
   QAction * userHelp;
+  
+  QAction * settReload;
+  QAction * settNevermind;
 
   QApplication  * pApp;
   
@@ -80,6 +94,10 @@ private:
   QUrl    effectiveUrl;
   Qt::WindowFlags  defaultWinFlags;
   bool showFrame;
+  
+  QTimer   reloadTimer;
+  int      reloadSecs;
+  bool     reloadOn;
   
   QShortcut  *controlL;
   QShortcut  *controlO;
@@ -91,6 +109,7 @@ private:
   QShortcut  *controlH;
   QShortcut  *controlB;
   QShortcut  *controlW;
+  QShortcut  *controlS;
 
 };
 
