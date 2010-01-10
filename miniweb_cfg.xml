@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<miniwebcfg version="1.0" >
+ <feedfile name="/home/bernd/.miniweb_marks.xml" />
+ <useragent yesorno="" name="/home/bernd/.miniweb_agents.xml" />
+ <saveonexit yesorno="yes" />
+ <storytextsize percent="100" />
+</miniwebcfg>

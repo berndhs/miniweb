@@ -84,6 +84,10 @@ MiniwebConfig::Read ()
       if (el.hasAttribute("name")) {
         SetBookMarkFile(el.attribute("name"));
       }
+    } if (el.tagName() == useragent) {
+      if (el.hasAttribute("name")) {
+        SetUserAgentFile(el.attribute("name"));
+      }
     } else if (el.tagName () == soetag) {
       SetSaveOnExit (BoolOption(el,boolattr));
     } else if (el.tagName () == ststag) {
@@ -121,6 +125,10 @@ MiniwebConfig::Write ()
   
   el = dom.createElement (filetag);
   el.setAttribute ("name", BookMarkFile());
+  root.appendChild (el);
+  
+  el = dom.createElement (useragent);
+  el.setAttribute ("name", UserAgentFile());
   root.appendChild (el);
   
   QString yesorno;

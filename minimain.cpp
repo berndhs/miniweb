@@ -15,6 +15,7 @@
 #include "miniwebdebug.h"
 #include "version.h"
 #include "webbox.h"
+#include "ualist.h"
 #include <QApplication>
 
 using namespace miniweb;
@@ -59,13 +60,21 @@ main (int argc, char*argv[])
   web.show();
   QString page ("about:blank");
   options.SetStringOpt ("website",page);
-  QString userAgent ("Maxwell Smart");
-  options.SetStringOpt ("useragent", userAgent);
-  qDebug () << userAgent;
-  qDebug () << " first char " << userAgent[0];
+  QString agentname ("Max");
+  options.SetStringOpt ("useragent", agentname);
+  
+  miniweb::MiniwebConfig  cfg;
+  miniweb::UAList         agents;
+  
+  agents.Load (cfg.UserAgentFile());
+  UserAgent * ag (0);
+  ag = agents.FindAgent (agentname);
+  web.SetAgent (*ag);
   web.SetPage (page);
   
   App.exec ();
-  
+ 
+  agents.Save (cfg.UserAgentFile());
+  cfg.Write (); 
 
 }

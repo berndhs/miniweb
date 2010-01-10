@@ -26,8 +26,12 @@ public:
   ~UAList ();
   
   bool AddAgent (const UserAgent ag);
+  bool AddAgent (UserAgent * ag);
   
   UserAgent * FindAgent (const QString name);
+  
+  void Save (QString filename);
+  bool Load (QString filename);
   
   bool Read (QIODevice *dev);
   void Write (QIODevice *dev);

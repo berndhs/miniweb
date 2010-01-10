@@ -21,7 +21,14 @@ MiniPage::MiniPage (QObject * parent)
 QString
 MiniPage::userAgentForUrl (const QUrl & url ) const
 {
-  return "Opera/8.01 (J2ME/MIDP; Opera Mini/3.0.6306/1528; en; U; ssr)";
+  return agentString;
+  //return "Opera/8.01 (J2ME/MIDP; Opera Mini/3.0.6306/1528; en; U; ssr)";
+}
+
+void
+MiniPage::SetUAString (const QString uas)
+{
+  agentString = uas;
 }
 
 

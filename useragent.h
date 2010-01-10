@@ -26,8 +26,8 @@ public:
   
   QString ID () const { return id; }
   QString UAString () const { return uaString; }
-  int     Wide () { return wide; }
-  int     High () { return high; }
+  int     Wide () const { return wide; }
+  int     High () const { return high; }
   
   void SetID (const QString i) { id = i; }
   void SetUAString (const QString ua) { uaString = ua; }
@@ -36,6 +36,8 @@ public:
   
   void Domify (QDomDocument & doc, QDomElement & el); 
   bool ParseDom (QDomElement & el);
+  
+  static UserAgent * NewDefaultAgent ();
   
 private:
 

@@ -11,6 +11,7 @@
 // of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 //
 #include "useragent_ff.h"
+#include "miniwebdebug.h"
 
 namespace miniweb {
 
@@ -68,7 +69,7 @@ UserAgent::ParseDom (QDomElement & el)
   for (nextel = el.firstChildElement ();
        !nextel.isNull();
        nextel = nextel.nextSiblingElement ()) {
-    tag = el.tagName ();
+    tag = nextel.tagName ();
     if (tag == UA_FF::tag_UAString) {
       str = nextel.text();
       SetUAString (str);
@@ -84,6 +85,17 @@ UserAgent::ParseDom (QDomElement & el)
     }
   }
   return haveSize && haveString;
+}
+
+UserAgent*
+UserAgent::NewDefaultAgent ()
+{
+  UserAgent * tmp = new UserAgent;
+  tmp->SetID ("Max");
+  tmp->SetUAString ("Maxwell Smart");
+  tmp->SetWide (800);
+  tmp->SetHigh (600);
+  return tmp;
 }
 
 } // namespace

@@ -14,8 +14,10 @@
 #include <QWidget>
 #include <QMenu>
 #include <QShortcut>
+#include <QSize>
 #include "ui_webbox.h"
 #include "minipage.h"
+#include "useragent.h"
 
 
 namespace miniweb {
@@ -32,6 +34,9 @@ public:
   void SetApp (QApplication * papp) { pApp = papp;}
   
   void SetPage (QString url);
+  
+  void Resize (const int wid, const int hi);
+  void SetAgent (const UserAgent &ag, const bool setsize = true);
   
   void SetFrame (const bool frame);
   

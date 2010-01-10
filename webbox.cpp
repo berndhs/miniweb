@@ -62,6 +62,25 @@ WebBox::quit ()
 }
 
 void
+WebBox::Resize (const int wid, const int hi)
+{
+  QSize size (wid,hi);
+  this->resize (size);
+  webView->resize (size);
+}
+
+void
+WebBox::SetAgent (const UserAgent &ag, const bool setsize)
+{
+  if (thePage) {
+    thePage->SetUAString (ag.UAString());
+  }
+  if (setsize) {
+    Resize (ag.Wide(),ag.High());
+  }
+}
+
+void
 WebBox::LoadDone (bool ok)
 {
   loadingLabel->hide();

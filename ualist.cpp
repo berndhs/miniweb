@@ -13,6 +13,8 @@
 
 #include "ualist.h"
 #include "useragent_ff.h"
+#include <QFile>
+#include "miniwebdebug.h"
 
 namespace miniweb {
 
@@ -47,6 +49,20 @@ UAList::AddAgent (const UserAgent ag)
   }
   UserAgent * newag = new UserAgent (ag);
   agents[key] = newag;
+  return true;
+}
+
+bool
+UAList::AddAgent (UserAgent * ag)
+{
+  if (ag == 0) {
+    return false;
+  }
+  QString key = ag->ID();
+  if (agents.count(key) != 0) {
+    return false;
+  }
+  agents[key] = ag;
   return true;
 }
 
@@ -91,18 +107,18 @@ void
 UAList::Domify (QDomDocument & doc)
 {
   doc.clear ();
-  QString emptyDoc ("<?xml version=\"1.0\" encoding=\"urf-8\"?>");
+  QString emptyDoc ("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
   emptyDoc.append ("\n");
-  emptyDoc.append ("<" + UA_FF::tag_File + "version=\"1.0\">\n");
+  emptyDoc.append ("<" + UA_FF::tag_File + " version=\"1.0\">\n");
   emptyDoc.append ("</" + UA_FF::tag_File + ">\n");
   doc.setContent (emptyDoc);
   
   QDomElement root = doc.documentElement ();
-  
   AgentMapType::iterator it;
   for (it = agents.begin(); it != agents.end(); it++) {
     it->second->Domify (doc,root);
   }
+  
 }
 
 bool
@@ -121,12 +137,35 @@ UAList::Parse (QDomDocument & doc)
     if (el.tagName() == UA_FF::tag_Agent) {
       pAg = new UserAgent;
       stillOk &= pAg->ParseDom (el);
+      if (stillOk) {
+        AddAgent (pAg);
+      }
     } else {
       stillOk = false;
       break;
     }
   }
   return stillOk;
+}
+
+void
+UAList::Save (QString filename)
+{
+  QFile file (filename);
+  file.open (QFile::WriteOnly);
+  Write (&file);
+  file.close();
+}
+
+bool
+UAList::Load (QString filename)
+{
+  QFile file (filename);
+  bool ok = file.open (QFile::ReadOnly);
+  if (ok) {
+    ok &= Read (&file);
+  }
+  return ok;
 }
 
 } // namespace

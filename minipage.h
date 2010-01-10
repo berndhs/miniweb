@@ -24,6 +24,12 @@ public:
    MiniPage (QObject * parent);
    
    QString userAgentForUrl ( const QUrl & url ) const;
+   
+   void SetUAString (const QString uas);
+
+private:
+
+   QString agentString;
 
 };
 
