@@ -28,6 +28,18 @@ SetOptions (QApplication &app, CmdOptions & opts)
   opts.AddStringOption ("useragent","u", app.tr("User Agent string"));
 }
 
+bool
+FindPageOption (CmdOptions & opts, QString & page)
+{
+  bool changed = opts.SetStringOpt ("website",page);
+  QStringList args = opts.Arguments();
+  if (args.isEmpty()) {
+    return changed;
+  }
+  page = args.first ();
+  return true;
+}
+
 int
 main (int argc, char*argv[])
 {
@@ -59,7 +71,8 @@ main (int argc, char*argv[])
   web.SetApp (&App);
   web.show();
   QString page ("about:blank");
-  options.SetStringOpt ("website",page);
+  FindPageOption (options, page);
+  
   QString agentname ("Max");
   options.SetStringOpt ("useragent", agentname);
   

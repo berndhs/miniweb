@@ -52,11 +52,16 @@ public slots:
     
   void LoadDone (bool ok);
   void LoadStarted ();
+  void Reload ();
+  void ToggleFrame ();
+  void Help ();
   
 private:
   
   void InitUserMenu ();
   void DisableNewUrl ();
+  
+  void MakeShortcuts ();
   
   
   MiniPage * thePage;
@@ -67,10 +72,12 @@ private:
   QAction * userNevermind;
   QAction * userOpen;
   QAction * userFrame;
+  QAction * userHelp;
 
   QApplication  * pApp;
   
   QString currentUrl;
+  QUrl    effectiveUrl;
   Qt::WindowFlags  defaultWinFlags;
   bool showFrame;
   
@@ -78,6 +85,12 @@ private:
   QShortcut  *controlO;
   QShortcut  *controlM;
   QShortcut  *escapeKey;
+  QShortcut  *controlR;
+  QShortcut  *controlQ;
+  QShortcut  *controlF;
+  QShortcut  *controlH;
+  QShortcut  *controlB;
+  QShortcut  *controlW;
 
 };
 

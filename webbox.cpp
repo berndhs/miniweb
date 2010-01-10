@@ -28,14 +28,8 @@ WebBox::WebBox ()
   failedLabel->hide ();
   
   InitUserMenu ();
+  MakeShortcuts ();
   
-  controlL = new QShortcut (QKeySequence (tr("Ctrl+L")), this);
-  controlO = new QShortcut (QKeySequence (tr("Ctrl+O")), this);
-  controlM = new QShortcut (QKeySequence (tr("Ctrl+M")), this);
-  escapeKey = new QShortcut (QKeySequence (Qt::Key_Escape), this);
-  connect (controlL, SIGNAL (activated()), this, SLOT (EnableNewUrl()));
-  connect (controlO, SIGNAL (activated()), this, SLOT (EnableNewUrl()));
-  connect (controlM, SIGNAL (activated()), this, SLOT (UserWantsSomething()));
   connect (theButton, SIGNAL (clicked()), this, SLOT (UserWantsSomething()));
   connect (webView, SIGNAL (loadFinished (bool)),
            this, SLOT (LoadDone (bool)));
@@ -44,6 +38,30 @@ WebBox::WebBox ()
   
   DisableNewUrl ();
   
+}
+
+void
+WebBox::MakeShortcuts ()
+{
+  controlB = new QShortcut (QKeySequence (tr("Ctrl+B")), this);
+  controlF = new QShortcut (QKeySequence (tr("Ctrl+F")), this);
+  controlH = new QShortcut (QKeySequence (tr("Ctrl+H")), this);
+  controlL = new QShortcut (QKeySequence (tr("Ctrl+L")), this);
+  controlO = new QShortcut (QKeySequence (tr("Ctrl+O")), this);
+  controlM = new QShortcut (QKeySequence (tr("Ctrl+M")), this);
+  controlR = new QShortcut (QKeySequence (tr("Ctrl+R")), this);
+  controlQ = new QShortcut (QKeySequence (tr("Ctrl+Q")), this);
+  controlW = new QShortcut (QKeySequence (tr("Ctrl+W")), this);
+  escapeKey = new QShortcut (QKeySequence (Qt::Key_Escape), this);
+  connect (controlB, SIGNAL (activated()), webView, SLOT (back()));
+  connect (controlF, SIGNAL (activated()), webView, SLOT (forward()));
+  connect (controlH, SIGNAL (activated()), this, SLOT (Help()));
+  connect (controlL, SIGNAL (activated()), this, SLOT (EnableNewUrl()));
+  connect (controlO, SIGNAL (activated()), this, SLOT (EnableNewUrl()));
+  connect (controlM, SIGNAL (activated()), this, SLOT (UserWantsSomething()));
+  connect (controlR, SIGNAL (activated()), webView, SLOT (reload()));
+  connect (controlQ, SIGNAL (activated()), this, SLOT (quit()));
+  connect (controlW, SIGNAL (activated()), this, SLOT (ToggleFrame()));
 }
 
 
@@ -62,11 +80,23 @@ WebBox::quit ()
 }
 
 void
+WebBox::Help ()
+{
+  SetPage ("qrc:/helpman.html");
+}
+
+void
 WebBox::Resize (const int wid, const int hi)
 {
   QSize size (wid,hi);
   this->resize (size);
   webView->resize (size);
+}
+
+void
+WebBox::Reload () 
+{
+  webView->reload ();
 }
 
 void
@@ -86,6 +116,7 @@ WebBox::LoadDone (bool ok)
   loadingLabel->hide();
   if (ok) {
     failedLabel->hide();
+    effectiveUrl = webView->url();
   } else {
     failedLabel->show();
   }
@@ -130,6 +161,7 @@ WebBox::InitUserMenu ()
   userFrame = userMenu.addAction (tr("Frame On/Off"));
   userNevermind = userMenu.addAction (tr("Cancel"));
   userOpen = userMenu.addAction (tr("Open..."));
+  userHelp = userMenu.addAction (tr("Help..."));
 }
 
 void
@@ -155,6 +187,7 @@ void
 WebBox::EnableNewUrl ()
 {
   newUrl->show ();
+  textEnter->clear ();
   textEnter->setFocus ();
   connect (textCancel, SIGNAL (clicked()), this, SLOT (NewUrlCancel ()));
   connect (escapeKey, SIGNAL (activated()), this, SLOT (NewUrlCancel ()));
@@ -177,6 +210,13 @@ WebBox::NewUrlCancel ()
 }
 
 void
+WebBox::ToggleFrame ()
+{
+  SetFrame (!showFrame);
+  this->setFocus ();
+}
+
+void
 WebBox::UserWantsSomething ()
 {
   QPoint here = theButton->pos();
@@ -188,7 +228,9 @@ WebBox::UserWantsSomething ()
   } else if (userWants == userOpen) {
     EnableNewUrl ();
   } else if (userWants == userFrame) {
-    SetFrame (!showFrame);
+    ToggleFrame ();
+  } else if (userWants == userHelp) {
+    Help ();
   }
 }
 

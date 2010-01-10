@@ -2,6 +2,7 @@
 <qresource>
   <file>LICENSE.txt</file>
   <file>blank.html</file>
+  <file>helpman.html</file>
 </qresource>
 </RCC>
 

@@ -21,8 +21,11 @@ MiniPage::MiniPage (QObject * parent)
 QString
 MiniPage::userAgentForUrl (const QUrl & url ) const
 {
-  return agentString;
-  //return "Opera/8.01 (J2ME/MIDP; Opera Mini/3.0.6306/1528; en; U; ssr)";
+  if (agentString.length() > 1) {
+    return agentString;
+  } else {
+    return QWebPage::userAgentForUrl (url);
+  }
 }
 
 void
