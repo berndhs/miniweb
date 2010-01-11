@@ -26,10 +26,14 @@ public:
    QString userAgentForUrl ( const QUrl & url ) const;
    
    void SetUAString (const QString uas);
+   void ToggleScroll ();
 
 private:
 
+   void SetScroll ();
+
    QString agentString;
+   bool    haveScrollbar;
 
 };
 

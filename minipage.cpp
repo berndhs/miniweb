@@ -17,7 +17,8 @@ namespace miniweb {
 MiniPage::MiniPage (QObject * parent)
 {
   setParent (parent);
-  mainFrame()->setScrollBarPolicy (Qt::Vertical, Qt::ScrollBarAlwaysOff);
+  haveScrollbar = false;
+  SetScroll ();
 }
 
 QString
@@ -36,6 +37,24 @@ MiniPage::SetUAString (const QString uas)
   agentString = uas;
 }
 
+void
+MiniPage::ToggleScroll ()
+{
+  haveScrollbar = !haveScrollbar;
+  SetScroll ();
+}
+
+void
+MiniPage::SetScroll ()
+{
+  Qt::ScrollBarPolicy scroll;
+  if (haveScrollbar) {
+    scroll = Qt::ScrollBarAlwaysOn;
+  } else {  
+    scroll = Qt::ScrollBarAlwaysOff;
+  }
+  mainFrame()->setScrollBarPolicy (Qt::Vertical, scroll);
+}
 
 
 } // namespace

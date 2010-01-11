@@ -211,6 +211,7 @@ WebBox::InitSettingsMenu ()
   settReload = settMenu.addAction (tr("Reload Timer..."));
   settFrame = settMenu.addAction (tr("Frame On/Off"));
   settSwitchPortrait = settMenu.addAction (tr("Portrait / Landscape"));
+  settScrollbar = settMenu.addAction (tr("Scrollbar On/Off"));
   settUserAgent = settMenu.addAction (tr("User Agent..."));
   settNevermind = settMenu.addAction (tr("Cancel"));
 }
@@ -347,6 +348,10 @@ WebBox::SettingsMenu ()
     SwitchSides ();
   } else if (userWants == settUserAgent) {
     agentMenu->Start (curSize, theButton->pos(), curAgent);
+  } else if (userWants == settScrollbar) {
+    if (thePage) {
+      thePage->ToggleScroll ();
+    }
   }
 }
 

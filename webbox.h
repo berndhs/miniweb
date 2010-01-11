@@ -101,6 +101,7 @@ private:
   QAction * settNevermind;
   QAction * settUserAgent;
   QAction * settSwitchPortrait;
+  QAction * settScrollbar;
   QAction * settFrame;
 
   QApplication  * pApp;
