@@ -1,9 +1,10 @@
 <!DOCTYPE RCC><RCC version="1.0">
 <qresource>
-  <file>LICENSE.txt</file>
+  <file>LICENSE.html</file>
   <file>blank.html</file>
   <file>helpman.html</file>
   <file>mwlogo.png</file>
+  <file>agentfile.xml</file>
 </qresource>
 </RCC>
 

@@ -45,6 +45,7 @@ SOURCES = \
           ualist.cpp \
           useragent.cpp \
           useragent_ff.cpp \
+          agentmenu.cpp \
           miniwebdebug.cpp
           
 
@@ -56,6 +57,7 @@ HEADERS = cmdoptions.h \
           ualist.h \
           useragent.h \
           useragent_ff.h \
+          agentmenu.h \
           miniwebdebug.h
           
 

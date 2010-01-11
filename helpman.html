@@ -1,7 +1,697 @@
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="AsciiDoc 8.4.5" />
+<title>MiniWeb Manual</title>
+<style type="text/css">
+/* Debug borders */
+p, li, dt, dd, div, pre, h1, h2, h3, h4, h5, h6 {
+/*
+  border: 1px solid red;
+*/
+}
+
+body {
+  margin: 1em 5% 1em 5%;
+}
+
+a {
+  color: blue;
+  text-decoration: underline;
+}
+a:visited {
+  color: fuchsia;
+}
+
+em {
+  font-style: italic;
+  color: navy;
+}
+
+strong {
+  font-weight: bold;
+  color: #083194;
+}
+
+tt {
+  color: navy;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #527bbd;
+  font-family: sans-serif;
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+  line-height: 1.3;
+}
+
+h1, h2, h3 {
+  border-bottom: 2px solid silver;
+}
+h2 {
+  padding-top: 0.5em;
+}
+h3 {
+  float: left;
+}
+h3 + * {
+  clear: left;
+}
+
+div.sectionbody {
+  font-family: serif;
+  margin-left: 0;
+}
+
+hr {
+  border: 1px solid silver;
+}
+
+p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+ul, ol, li > p {
+  margin-top: 0;
+}
+
+pre {
+  padding: 0;
+  margin: 0;
+}
+
+span#author {
+  color: #527bbd;
+  font-family: sans-serif;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+span#email {
+}
+span#revnumber, span#revdate, span#revremark {
+  font-family: sans-serif;
+}
+
+div#footer {
+  font-family: sans-serif;
+  font-size: small;
+  border-top: 2px solid silver;
+  padding-top: 0.5em;
+  margin-top: 4.0em;
+}
+div#footer-text {
+  float: left;
+  padding-bottom: 0.5em;
+}
+div#footer-badges {
+  float: right;
+  padding-bottom: 0.5em;
+}
+
+div#preamble {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+div.tableblock, div.imageblock, div.exampleblock, div.verseblock,
+div.quoteblock, div.literalblock, div.listingblock, div.sidebarblock,
+div.admonitionblock {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+div.admonitionblock {
+  margin-top: 2.5em;
+  margin-bottom: 2.5em;
+}
+
+div.content { /* Block element content. */
+  padding: 0;
+}
+
+/* Block element titles. */
+div.title, caption.title {
+  color: #527bbd;
+  font-family: sans-serif;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 1.0em;
+  margin-bottom: 0.5em;
+}
+div.title + * {
+  margin-top: 0;
+}
+
+td div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content div.title:first-child {
+  margin-top: 0.0em;
+}
+div.content + div.title {
+  margin-top: 0.0em;
+}
+
+div.sidebarblock > div.content {
+  background: #ffffee;
+  border: 1px solid silver;
+  padding: 0.5em;
+}
+
+div.listingblock > div.content {
+  border: 1px solid silver;
+  background: #f4f4f4;
+  padding: 0.5em;
+}
+
+div.quoteblock {
+  padding-left: 2.0em;
+  margin-right: 10%;
+}
+div.quoteblock > div.attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}
+
+div.verseblock {
+  padding-left: 2.0em;
+  margin-right: 10%;
+}
+div.verseblock > div.content {
+  white-space: pre;
+}
+div.verseblock > div.attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+/* DEPRECATED: Pre version 8.2.7 verse style literal block. */
+div.verseblock + div.attribution {
+  text-align: left;
+}
+
+div.admonitionblock .icon {
+  vertical-align: top;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-decoration: underline;
+  color: #527bbd;
+  padding-right: 0.5em;
+}
+div.admonitionblock td.content {
+  padding-left: 0.5em;
+  border-left: 2px solid silver;
+}
+
+div.exampleblock > div.content {
+  border-left: 2px solid silver;
+  padding: 0.5em;
+}
+
+div.imageblock div.content { padding-left: 0; }
+span.image img { border-style: none; }
+a.image:visited { color: white; }
+
+dl {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+dt {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+  font-style: normal;
+  color: navy;
+}
+dd > *:first-child {
+  margin-top: 0.1em;
+}
+
+ul, ol {
+    list-style-position: outside;
+}
+ol.arabic {
+  list-style-type: decimal;
+}
+ol.loweralpha {
+  list-style-type: lower-alpha;
+}
+ol.upperalpha {
+  list-style-type: upper-alpha;
+}
+ol.lowerroman {
+  list-style-type: lower-roman;
+}
+ol.upperroman {
+  list-style-type: upper-roman;
+}
+
+div.compact ul, div.compact ol,
+div.compact p, div.compact p,
+div.compact div, div.compact div {
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+}
+
+div.tableblock > table {
+  border: 3px solid #527bbd;
+}
+thead {
+  font-family: sans-serif;
+  font-weight: bold;
+}
+tfoot {
+  font-weight: bold;
+}
+td > div.verse {
+  white-space: pre;
+}
+p.table {
+  margin-top: 0;
+}
+/* Because the table frame attribute is overriden by CSS in most browsers. */
+div.tableblock > table[frame="void"] {
+  border-style: none;
+}
+div.tableblock > table[frame="hsides"] {
+  border-left-style: none;
+  border-right-style: none;
+}
+div.tableblock > table[frame="vsides"] {
+  border-top-style: none;
+  border-bottom-style: none;
+}
+
+
+div.hdlist {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+}
+div.hdlist tr {
+  padding-bottom: 15px;
+}
+dt.hdlist1.strong, td.hdlist1.strong {
+  font-weight: bold;
+}
+td.hdlist1 {
+  vertical-align: top;
+  font-style: normal;
+  padding-right: 0.8em;
+  color: navy;
+}
+td.hdlist2 {
+  vertical-align: top;
+}
+div.hdlist.compact tr {
+  margin: 0;
+  padding-bottom: 0;
+}
+
+.comment {
+  background: yellow;
+}
+
+@media print {
+  div#footer-badges { display: none; }
+}
+
+div#toctitle {
+  color: #527bbd;
+  font-family: sans-serif;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-top: 1.0em;
+  margin-bottom: 0.1em;
+}
+
+div.toclevel1, div.toclevel2, div.toclevel3, div.toclevel4 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+div.toclevel2 {
+  margin-left: 2em;
+  font-size: 0.9em;
+}
+div.toclevel3 {
+  margin-left: 4em;
+  font-size: 0.9em;
+}
+div.toclevel4 {
+  margin-left: 6em;
+  font-size: 0.9em;
+}
+/* Workarounds for IE6's broken and incomplete CSS2. */
+
+div.sidebar-content {
+  background: #ffffee;
+  border: 1px solid silver;
+  padding: 0.5em;
+}
+div.sidebar-title, div.image-title {
+  color: #527bbd;
+  font-family: sans-serif;
+  font-weight: bold;
+  margin-top: 0.0em;
+  margin-bottom: 0.5em;
+}
+
+div.listingblock div.content {
+  border: 1px solid silver;
+  background: #f4f4f4;
+  padding: 0.5em;
+}
+
+div.quoteblock-attribution {
+  padding-top: 0.5em;
+  text-align: right;
+}
+
+div.verseblock-content {
+  white-space: pre;
+}
+div.verseblock-attribution {
+  padding-top: 0.75em;
+  text-align: left;
+}
+
+div.exampleblock-content {
+  border-left: 2px solid silver;
+  padding-left: 0.5em;
+}
+
+/* IE6 sets dynamically generated links as visited. */
+div#toc a:visited { color: blue; }
+</style>
 </head>
 <body>
-Help FileThe Survey-Ship Tethys made the first landing on the planet, which had no name. It was an admirable planet in many ways. It had an ample atmosphere and many seas, which the nearby sun warmed so lavishly that a perpetual cloudbank hid them and most of the solid ground from view. It had mountains and continents and islands and high plateaus. It had day and night and wind and rain, and its mean temperature was within the range to which human beings could readily accommodate. It was rather on the tropic side, but not unpleasant.
+<div id="header">
+<h1>MiniWeb Manual</h1>
+<span id="author">Bernd Stramm</span><br />
+<span id="email"><tt>&lt;<a href="mailto:bernd.stramm@gmail.com">bernd.stramm@gmail.com</a>&gt;</tt></span><br />
+<span id="revnumber">version 0.1,</span>
+<span id="revdate">January 2010</span>
+</div>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph"><p>MiniWeb is a very simple Web Browser with support for varying user agent strings.</p></div>
+<div class="paragraph"><p>MiniWeb&#8217;s purpose is for testing website layouts for different screen sizes and
+different user agents (browser/device combinations), in particular for
+different phones. It allows switching user agents on the fly.</p></div>
+<div class="paragraph"><p>It uses an extensible configuration file, with builtin default examples, which
+sets user agent strings and screen sizes to simulate different phones.</p></div>
+<div class="paragraph"><p>MiniWeb can also be handy to watch small websites when doing other work, such as
+news tickers, sports scores, weather reports and such things. It provides an
+automatic reload timer for keeping these things current.</p></div>
+</div>
+</div>
+<h2 id="_language_and_keyboards">Language and Keyboards</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>The language and keyboard references in this manual are for English in North America,
+and similar keyboard layouts. In some locales the keys will have different labels. If
+you manage to run this on a phone with only a numeric keypad, the shortcuts may
+not work.</p></div>
+</div>
+<h2 id="_buttons">Buttons</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>There is one button. It is small and flat in the top left hand corner of the window. It
+does not have a label. Clicking on the button opens the <strong>Main Window</strong>.</p></div>
+</div>
+<h2 id="_menus">Menus</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>There are two menus. The <strong>Main Menu</strong> and the <strong>Settings Menu</strong>. You can
+reach the <strong>Main Menu</strong> by clicking the button, or by the <strong>Ctrl-M</strong> shortcut.
+You can reach the <strong>Settings Menu</strong> from the <strong>Main Menu</strong>, or by the <strong>Ctrl-S</strong> shortcut.</p></div>
+<h3 id="_main_menu">Main Menu</h3><div style="clear:left"></div>
+<div class="paragraph"><p>The <strong>Main Menu</strong> allows you to access all functions of the program. You can select from
+these entries:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<strong>Quit</strong> exits the program
+</p>
+</li>
+<li>
+<p>
+<strong>Cancel</strong> closes the menu and does nothing
+</p>
+</li>
+<li>
+<p>
+<strong>Open&#8230;</strong> allows you to open a web page, after entering the page using a dialog
+</p>
+</li>
+<li>
+<p>
+<strong>Settings&#8230;</strong> gets you to the <strong>Settings Menu</strong>
+</p>
+</li>
+<li>
+<p>
+<strong>Help&#8230;</strong> opens the help manual (the one you are reading now) in the browser
+</p>
+</li>
+<li>
+<p>
+<strong>License&#8230;</strong> shows the license in the browser
+</p>
+</li>
+</ul></div>
+<h3 id="_settings_menu">Settings Menu</h3><div style="clear:left"></div>
+<div class="paragraph"><p>The <strong>Settings Menu</strong> allows you to change some of the functionality and
+looks of the browser. You can select from these entries:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<strong>Reload Timer</strong> allows you to adjust the delay of the reload timer, or to
+turn off the timer by setting the delay to zero (0).
+</p>
+</li>
+<li>
+<p>
+<strong>Frame On/Off</strong> switches the window frame on or off. This feature may not work on
+some versions of Windows. This feature may not make sense if you run this
+program on a phone.
+</p>
+</li>
+<li>
+<p>
+<strong>Portrait / Landscape</strong> changes the orientation of the browser, by switching
+the length of the vertical and horizontal sides
+</p>
+</li>
+<li>
+<p>
+<strong>User Agent</strong> allows you to change the user agent. You can select a different agent,
+or the one presently used, from a list of kown agents. This list can be customized
+by editing the <strong>Agent List File</strong>.
+</p>
+</li>
+<li>
+<p>
+<strong>Cancel</strong> closes the menu and does nothing
+</p>
+</li>
+</ul></div>
+</div>
+<h2 id="_shortcut_keys">Shortcut Keys</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>MiniWeb provides shortcut keys to make operation easier, and largely independent
+or mouse or other pointing devices. This can be very useful for some environments. Note
+however that all these functions are accessible from the menus, and by mouse or other
+pointing device.</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<strong>Escape</strong> usually the same as <strong>Cancel</strong> in menus
+</p>
+</li>
+<li>
+<p>
+<strong>Ctrl-B</strong> go back one page in the browser
+</p>
+</li>
+<li>
+<p>
+<strong>Ctrl-F</strong> go forward one page in the browser
+</p>
+</li>
+<li>
+<p>
+<strong>Ctrl-H</strong> open the Help manual
+</p>
+</li>
+<li>
+<p>
+<strong>Ctrl-M</strong> open the <strong>Main Menu</strong>
+</p>
+</li>
+<li>
+<p>
+<strong>Ctrl-L</strong> open a new web link
+</p>
+</li>
+<li>
+<p>
+<strong>Ctrl-O</strong> open a new web link
+</p>
+</li>
+<li>
+<p>
+<strong>Ctrl-Q</strong> exit the program, same as <strong>Quit</strong> from the <strong>Main Menu</strong>
+</p>
+</li>
+<li>
+<p>
+<strong>Ctrl-R</strong> reload the current page
+</p>
+</li>
+<li>
+<p>
+<strong>Ctrl-S</strong> open the <strong>Settings Menu</strong>
+</p>
+</li>
+<li>
+<p>
+<strong>Ctrl-W</strong> toggle the window frame on/off, same as <strong>Frame On/Off</strong> from
+ the <strong>Settings Menu</strong>
+</p>
+</li>
+</ul></div>
+</div>
+<h2 id="_agent_list_file">Agent List File</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>MiniWeb contains a built-in list of user agents. It will also read
+a list from a file in a standard location, if that file exists. Normally
+the file is called ".miniweb_agents.xml" in the user&#8217;s home directory. The
+file name and location can be changed by editing the file ".miniweb_cfg.xml"
+in the user&#8217;s home directory.</p></div>
+<div class="paragraph"><p>The agent list is in a custom XML format, that looks like this:</p></div>
+<div class="listingblock">
+<div class="title">Agent File Example</div>
+<div class="content"><!-- Generator: GNU source-highlight 2.10
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #000080">&lt;?xml</span></span> <span style="color: #009900">version</span><span style="color: #990000">=</span><span style="color: #009900">'1.0'</span> <span style="color: #009900">encoding</span><span style="color: #990000">=</span><span style="color: #009900">'utf-8'?</span>&gt;
+<span style="color: #009900">&lt;useragentfile</span> <span style="color: #009900">version</span><span style="color: #990000">=</span><span style="color: #FF0000">"1.0"</span> &gt;
+ <span style="color: #009900">&lt;Agent</span> <span style="color: #009900">name</span><span style="color: #990000">=</span><span style="color: #FF0000">"Max"</span> &gt;
+  <span style="color: #009900">&lt;useragentstring</span>&gt;<span style="color: #009900">Maxwell</span> <span style="color: #009900">Smart&lt;/useragentstring</span>&gt;
+  <span style="color: #009900">&lt;size</span> <span style="color: #009900">high</span><span style="color: #990000">=</span><span style="color: #FF0000">"600"</span> <span style="color: #009900">wide</span><span style="color: #990000">=</span><span style="color: #FF0000">"800"</span> <span style="color: #009900">/</span>&gt;
+ <span style="color: #009900">&lt;/Agent</span>&gt;
+<span style="color: #009900">&lt;/useragentfile</span>&gt;</tt></pre></div></div>
+<div class="paragraph"><p>The <strong>useragentstring</strong> entry is what is presented to the website. Copy this
+from your favourit browser.</p></div>
+<h3 id="_finding_user_agent_strings">Finding User Agent Strings</h3><div style="clear:left"></div>
+<div class="paragraph"><p>Many user agent strings can be found on the web of course. If you want to find
+out the string from a particular phone, make a web page like this</p></div>
+<div class="listingblock">
+<div class="title">Web Page to Find User Agent Strings</div>
+<div class="content"><!-- Generator: GNU source-highlight 2.10
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">&lt;html&gt;</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">&lt;head&gt;</span></span> <span style="font-weight: bold"><span style="color: #0000FF">&lt;/head&gt;</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">&lt;body&gt;</span></span>
+&lt;?php phpinfo(); ?&gt;
+<span style="font-weight: bold"><span style="color: #0000FF">&lt;/body&gt;</span></span>
+<span style="font-weight: bold"><span style="color: #0000FF">&lt;/html&gt;</span></span></tt></pre></div></div>
+<div class="paragraph"><p>and see what it says in the Apache Environment under HTTP_USER_AGENT when you
+surf to that page from the phone.</p></div>
+</div>
+<h2 id="_emulating_phone_browsers">Emulating Phone Browsers</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>MiniWeb <em>does not emulate any phone browsers</em>. It uses the standard browser
+provided by the Qt WebKit framework. The only aspects of phone browsers, or
+of any other user agents, are the user agent string presented to the website,
+and the screen size provided. Consequently there is no guarantee that what
+you see on MiniWeb looks anything like what you see on a phone, even if you
+use the identical user agent string and screen size.</p></div>
+</div>
+<h2 id="_building_miniweb_from_source">Building MiniWeb from Source</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>MiniWeb can be built from the command line in Linux, or from the Qt Creator tool
+in Windows. It can probably be build quite easily on Mac OS-X as well, or on
+anything else that is compatible with Qt 4x. Try it for your favourite phone,
+it will probably work.</p></div>
+<h3 id="_prerequisits">Prerequisits</h3><div style="clear:left"></div>
+<div class="paragraph"><p>To build and run MiniWeb, the current version uses:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+C++
+</p>
+<div class="olist loweralpha"><ol class="loweralpha">
+<li>
+<p>
+Gcc or Visual C++
+</p>
+</li>
+</ol></div>
+</li>
+<li>
+<p>
+Qt4, including these parts:
+</p>
+<div class="olist loweralpha"><ol class="loweralpha">
+<li>
+<p>
+Core
+</p>
+</li>
+<li>
+<p>
+Gui
+</p>
+</li>
+<li>
+<p>
+Network
+</p>
+</li>
+<li>
+<p>
+Xml
+</p>
+</li>
+<li>
+<p>
+WebKit
+</p>
+</li>
+</ol></div>
+</li>
+</ol></div>
+<h3 id="_how_to_build">How to Build</h3><div style="clear:left"></div>
+<div class="paragraph"><p>It&#8217;s pretty straightforward. Please read the INSTALL file that comes with
+the source code.</p></div>
+</div>
+<h2 id="_license_and_warranty">License and Warranty</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>This is free open source software, hence the usual licensing. And the
+usual warranty, or lack thereof:</p></div>
+<div class="sidebarblock">
+<div class="sidebar-content">
+<div class="paragraph"><p>These programs are distributed under the terms of the
+GNU General Public License version 3.</p></div>
+<div class="paragraph"><p>See the file <strong>LICENSE.txt</strong> for the complete text of the license. You can
+also find it on <a href="http://www.gnu.org">http://www.gnu.org</a>. Or you can select <strong>License</strong> from the
+main menu to see a copy.</p></div>
+<div class="paragraph"><p>This software is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty
+of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.</p></div>
+</div></div>
+<div class="quoteblock">
+<div class="quoteblock-content">
+<div class="paragraph"><p><sub>Copyright &#169; 2010 <a href="http://www.bernd-stramm.com/">Bernd Stramm</a> All Rights Reserved</sub></p></div>
+</div>
+<div class="quoteblock-attribution">
+</div></div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Version 0.1<br />
+Last updated 2010-01-10 22:27:22 EDT
+</div>
+</div>
 </body>
 </html>

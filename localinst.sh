@@ -4,6 +4,6 @@ PROGRAM=miniweb
 
 DEST=$HOME/bin
 
-install --strip $PROGRAM $DEST
+install --compare $PROGRAM $DEST
 
 ls -l $DEST/$PROGRAM

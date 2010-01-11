@@ -1,4 +1,5 @@
 #include "minipage.h"
+#include <QWebFrame>
 
 //
 //  Copyright (C) 2010 - Bernd H Stramm 
@@ -16,6 +17,7 @@ namespace miniweb {
 MiniPage::MiniPage (QObject * parent)
 {
   setParent (parent);
+  mainFrame()->setScrollBarPolicy (Qt::Vertical, Qt::ScrollBarAlwaysOff);
 }
 
 QString

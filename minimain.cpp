@@ -79,10 +79,17 @@ main (int argc, char*argv[])
   miniweb::MiniwebConfig  cfg;
   miniweb::UAList         agents;
   
-  agents.Load (cfg.UserAgentFile());
+  bool loaded = agents.Load (cfg.UserAgentFile());
+  if (!loaded) {
+    agents.Load (QString(":/agentfile.xml"));
+  }
   UserAgent * ag (0);
   ag = agents.FindAgent (agentname);
+  if (ag == 0) {
+   qFatal ("no user agent");
+  }
   web.SetAgent (*ag);
+  web.SetUAList (&agents);
   web.SetPage (page);
   
   App.exec ();

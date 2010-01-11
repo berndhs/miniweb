@@ -168,4 +168,30 @@ UAList::Load (QString filename)
   return ok;
 }
 
+UserAgent *
+UAList::First ()
+{
+  agentIt = agents.begin();
+  if (agentIt == agents.end()) {
+    return 0;
+  }
+  return agentIt->second;
+}
+
+UserAgent *
+UAList::Next ()
+{
+  agentIt++;
+  if (agentIt == agents.end()) {
+    return 0;
+  }
+  return agentIt->second;
+}
+
+bool
+UAList::End ()
+{
+  return (agentIt == agents.end());
+}
+
 } // namespace

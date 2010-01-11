@@ -257,6 +257,42 @@
     </property>
    </widget>
   </widget>
+  <widget class="miniweb::AgentMenu" name="agentMenu" native="true">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>320</width>
+     <height>480</height>
+    </rect>
+   </property>
+   <widget class="QListWidget" name="agentWidget">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>20</y>
+      <width>320</width>
+      <height>211</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="agentTitle">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>0</y>
+      <width>141</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Choose User Agent</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+  </widget>
  </widget>
  <layoutdefault spacing="0" margin="0"/>
  <customwidgets>
@@ -264,6 +300,12 @@
    <class>QWebView</class>
    <extends>QWidget</extends>
    <header>QtWebKit/QWebView</header>
+  </customwidget>
+  <customwidget>
+   <class>miniweb::AgentMenu</class>
+   <extends>QWidget</extends>
+   <header location="global">agentmenu.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources>

@@ -29,6 +29,9 @@ public:
   bool AddAgent (UserAgent * ag);
   
   UserAgent * FindAgent (const QString name);
+  UserAgent * First ();
+  UserAgent * Next ();
+  bool        End ();
   
   void Save (QString filename);
   bool Load (QString filename);
@@ -46,6 +49,8 @@ private:
   typedef std::map <QString, UserAgent *> AgentMapType;
   
   AgentMapType  agents;
+  
+  AgentMapType::iterator agentIt;
 
 };
 

@@ -19,6 +19,8 @@
 #include "ui_webbox.h"
 #include "minipage.h"
 #include "useragent.h"
+#include "ualist.h"
+#include "agentmenu.h"
 
 
 namespace miniweb {
@@ -33,16 +35,19 @@ public:
   WebBox ();
   
   void SetApp (QApplication * papp) { pApp = papp;}
+  void SetUAList (UAList * ul);
   
   void SetPage (QString url);
   
   void Resize (const int wid, const int hi);
-  void SetAgent (const UserAgent &ag, const bool setsize = true);
   
   void SetFrame (const bool frame);
   
 public slots:
 
+
+  void SetAgent (const UserAgent &ag, const bool setsize = true);
+  
   void UserWantsSomething ();
   void SettingsMenu ();
   void update ();
@@ -66,6 +71,8 @@ private:
   void InitSettingsMenu ();
   void DisableNewUrl ();
   void DisableSettings ();
+  void SwitchSides ();
+  void License ();
   
   void EditReload ();
   
@@ -74,6 +81,11 @@ private:
   
   MiniPage * thePage;
   
+  UAList        * uaList;
+  
+  UserAgent        curAgent ;
+  QSize            curSize;
+  
   QMenu   userMenu;
   QMenu   settMenu;
   QMenu   preMenu;
@@ -81,12 +93,15 @@ private:
   QAction * userQuit;
   QAction * userNevermind;
   QAction * userOpen;
-  QAction * userFrame;
   QAction * userSettings;
   QAction * userHelp;
+  QAction * userLicense;
   
   QAction * settReload;
   QAction * settNevermind;
+  QAction * settUserAgent;
+  QAction * settSwitchPortrait;
+  QAction * settFrame;
 
   QApplication  * pApp;
   

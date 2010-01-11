@@ -21,6 +21,7 @@ WebBox::WebBox ()
   reloadOn = false;
   reloadSecs = 0;  // 1 day
   pApp = 0;
+  uaList = 0;
   defaultWinFlags = this->windowFlags();
   effectiveUrl = QUrl("");
   
@@ -35,6 +36,7 @@ WebBox::WebBox ()
   MakeShortcuts ();
   DisableNewUrl ();
   DisableSettings ();
+  agentMenu->hide();
   
   reloadTimer.setParent (this);
   reloadTimer.stop ();
@@ -44,6 +46,8 @@ WebBox::WebBox ()
            this, SLOT (LoadDone (bool)));
   connect (webView, SIGNAL (loadStarted ()), 
            this, SLOT (LoadStarted ()));
+  connect (agentMenu, SIGNAL (UserAgentChange (const UserAgent)),
+            this, SLOT (SetAgent (const UserAgent)));
   
   
 }
@@ -76,6 +80,14 @@ WebBox::MakeShortcuts ()
 
 
 void
+WebBox::SetUAList (UAList * ual)
+{
+  uaList = ual;
+  agentMenu->Init (agentWidget, uaList);
+}
+
+
+void
 WebBox::update ()
 {
   QWidget::update ();
@@ -96,6 +108,12 @@ WebBox::Help ()
 }
 
 void
+WebBox::License ()
+{
+  SetPage ("qrc:/LICENSE.html");
+}
+
+void
 WebBox::Resize (const int wid, const int hi)
 {
   QSize size (wid,hi);
@@ -112,11 +130,13 @@ WebBox::Reload ()
 void
 WebBox::SetAgent (const UserAgent &ag, const bool setsize)
 {
+  curAgent = ag;
   if (thePage) {
     thePage->SetUAString (ag.UAString());
   }
   if (setsize) {
     Resize (ag.Wide(),ag.High());
+    curSize = QSize (ag.Wide(), ag.High());
   }
 }
 
@@ -178,17 +198,20 @@ void
 WebBox::InitUserMenu ()
 {
   userQuit = userMenu.addAction (tr("Quit"));
-  userFrame = userMenu.addAction (tr("Frame On/Off"));
   userNevermind = userMenu.addAction (tr("Cancel"));
   userOpen = userMenu.addAction (tr("Open..."));
   userSettings = userMenu.addAction (tr("Settings..."));
   userHelp = userMenu.addAction (tr("Help..."));
+  userLicense = userMenu.addAction (tr("License..."));
 }
 
 void
 WebBox::InitSettingsMenu ()
 {
-  settReload = settMenu.addAction (tr("Reload Timer"));
+  settReload = settMenu.addAction (tr("Reload Timer..."));
+  settFrame = settMenu.addAction (tr("Frame On/Off"));
+  settSwitchPortrait = settMenu.addAction (tr("Portrait / Landscape"));
+  settUserAgent = settMenu.addAction (tr("User Agent..."));
   settNevermind = settMenu.addAction (tr("Cancel"));
 }
 
@@ -280,6 +303,16 @@ WebBox::ToggleFrame ()
 }
 
 void
+WebBox::SwitchSides ()
+{
+  int w = curSize.width();
+  int h = curSize.height();
+  curSize.setWidth (h);
+  curSize.setHeight (w);
+  Resize (h,w);
+}
+
+void
 WebBox::UserWantsSomething ()
 {
   QPoint here = theButton->pos();
@@ -290,12 +323,12 @@ WebBox::UserWantsSomething ()
     return;
   } else if (userWants == userOpen) {
     EnableNewUrl ();
-  } else if (userWants == userFrame) {
-    ToggleFrame ();
   } else if (userWants == userSettings) {
     SettingsMenu();
   } else if (userWants == userHelp) {
     Help ();
+  } else if (userWants == userLicense) {
+    License ();
   }
 }
 
@@ -308,6 +341,12 @@ WebBox::SettingsMenu ()
     EditReload ();
   } else if (userWants == settNevermind) {
     return;
+  } else if (userWants == settFrame) {
+    ToggleFrame ();
+  } else if (userWants == settSwitchPortrait) {
+    SwitchSides ();
+  } else if (userWants == settUserAgent) {
+    agentMenu->Start (curSize, theButton->pos(), curAgent);
   }
 }
 
