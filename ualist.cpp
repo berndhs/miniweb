@@ -66,6 +66,16 @@ UAList::AddAgent (UserAgent * ag)
   return true;
 }
 
+bool
+UAList::EraseAgent (const QString name)
+{
+  if (agents.count(name) == 0) {
+    return false;
+  }
+  agents.erase(name);
+  return true;
+}
+
 UserAgent *
 UAList::FindAgent (QString name)
 {

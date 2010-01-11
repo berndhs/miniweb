@@ -26,13 +26,24 @@ not work.
 == Buttons
 
 There is one button. It is small and flat in the top left hand corner of the window. It
-does not have a label. Clicking on the button opens the *Main Window*.
+is labelled "Menu". Clicking on the button opens the *Main Menu*. From the *Main Menu*
+all functions are accessible.
 
-== Menus
+== Menus, Dialogs
 
-There are two menus. The *Main Menu* and the *Settings Menu*. You can
+There are three menus. The *Main Menu* and the *Settings Menu*. You can
 reach the *Main Menu* by clicking the button, or by the *Ctrl-M* shortcut.
 You can reach the *Settings Menu* from the *Main Menu*, or by the *Ctrl-S* shortcut.
+
+There are dialogs for loading a website, for changing and editing user agents,
+and for changing the reload timer delay.
+
+=== Loading a Website
+
+Press *Ctrl-L*, or go to the *Main Menu* and select *Open...*.
+
+You will get a dialog where you can enter the web sites address (the URL). Enter
+the URL, and click *OK* or press *Return* or *Enter*.
 
 === Main Menu
 
@@ -45,6 +56,7 @@ these entries:
 - *Settings...* gets you to the *Settings Menu*
 - *Help...* opens the help manual (the one you are reading now) in the browser
 - *License...* shows the license in the browser
+- *About...* shows the current version of the program
 
 === Settings Menu
 
@@ -65,7 +77,8 @@ for laptops without a mouse wheel, or similar setups, you can enable the vertica
 scrool bar.
 - *User Agent* allows you to change the user agent. You can select a different agent,
 or the one presently used, from a list of kown agents. This list can be customized
-by editing the *Agent List File*.
+by editing the *Agent List File*. You can also edit user agents, and create new
+user agents in the list.
 - *Cancel* closes the menu and does nothing
 
 == Shortcut Keys
@@ -75,26 +88,41 @@ or mouse or other pointing devices. This can be very useful for some environment
 however that all these functions are accessible from the menus, and by mouse or other 
 pointing device.
 
- - *Escape* usually the same as *Cancel* in menus
- - *Ctrl-B* go back one page in the browser
- - *Ctrl-F* go forward one page in the browser
- - *Ctrl-H* open the Help manual
- - *Ctrl-M* open the *Main Menu*
- - *Ctrl-L* open a new web link
- - *Ctrl-O* open a new web link
- - *Ctrl-Q* exit the program, same as *Quit* from the *Main Menu*
- - *Ctrl-R* reload the current page
- - *Ctrl-S* open the *Settings Menu*
- - *Ctrl-W* toggle the window frame on/off, same as *Frame On/Off* from
- the *Settings Menu*
+****
+ *Escape*:: usually the same as *Cancel* in menus
+ *Ctrl-B*:: go back one page in the browser
+ *Ctrl-F*:: go forward one page in the browser
+ *Ctrl-H*:: open the Help manual
+ *Ctrl-M*:: open the *Main Menu*
+ *Ctrl-L*:: open a new web link
+ *Ctrl-O*:: open a new web link
+ *Ctrl-Q*:: exit the program, same as *Quit* from the *Main Menu*
+ *Ctrl-R*:: reload the current page
+ *Ctrl-S*:: open the *Settings Menu*
+ *Ctrl-W*:: toggle the window frame on/off, same as *Frame On/Off* from
+ the *Settings Menu*.
+****
+
+While you are editing an existing or new user agent record, these shortcut keys also
+work:
+
+**** 
+ *Ctrl-D*:: deletes the user agent
+ *Ctrl-A*:: saves the user agent
+ *Escape*:: cancels the edit, does not save any changes made.
+****
 
 == Agent List File
 
 MiniWeb contains a built-in list of user agents. It will also read 
 a list from a file in a standard location, if that file exists. Normally
-the file is called ".miniweb_agents.xml" in the user's home directory. The
-file name and location can be changed by editing the file ".miniweb_cfg.xml"
-in the user's home directory.
+the file is called ".miniweb_agents.xml" in the user's home directory. 
+
+MiniWeb saves the agent list file when it exits.
+
+Note that if you remove the agent list file, or if you move it from the standard
+location, MiniWeb will not find it the next time it runs. It will therefore
+revert to the built-in list.
 
 The agent list is in a custom XML format, that looks like this:
 

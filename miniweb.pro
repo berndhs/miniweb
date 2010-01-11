@@ -24,7 +24,7 @@ TRANSLATIONS =
 CONFIG(release, debug|release) {
    DEFINES += QT_NO_DEBUG
    DEFINES += QT_NO_DEBUG_OUTPUT
-   DEFINES += DRSS_DEBUG=0
+   DEFINES += MINIWEB_DEBUG=0
    QMAKE_CXXFLAGS_RELEASE -= -g
    TARGET = miniweb
 }
@@ -46,10 +46,12 @@ SOURCES = \
           useragent.cpp \
           useragent_ff.cpp \
           agentmenu.cpp \
+          newagent.cpp \
           miniwebdebug.cpp
           
 
-HEADERS = cmdoptions.h \
+HEADERS = \
+          cmdoptions.h \
           miniwebconfig.h \
           minipage.h \
           webbox.h \
@@ -58,6 +60,7 @@ HEADERS = cmdoptions.h \
           useragent.h \
           useragent_ff.h \
           agentmenu.h \
+          newagent.h \
           miniwebdebug.h
           
 

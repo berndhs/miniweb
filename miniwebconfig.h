@@ -31,15 +31,12 @@ public:
    void Read ();
    void Write ();
    
-   QString BookMarkFile() { return bookMarkFile; }
    QString ConfigFile()   { return configFile; }
    QString UserAgentFile() { return userAgentFile; }
    bool    Changed () { return changed; }
    bool    SaveOnExit () { return saveonexit; }
    int     StoryTextSize () { return storytextsize; }
    
- 
-   void SetBookMarkFile (QString f) { bookMarkFile = f;}
    void SetConfigFile   (QString cf) { configFile = cf; }
    void SetUserAgentFile (QString uaf) { userAgentFile = uaf; }
    void SetChanged (const bool c)    { changed = c; }
@@ -52,7 +49,6 @@ public:
 
 private:
 
-   QString bookMarkFile;
    QString configFile;
    QString userAgentFile;
    bool    changed;
@@ -60,7 +56,6 @@ private:
    bool    running;
    int     storytextsize;
    
-   static QString filetag;
    static QString doctypetag;
    static QString useragent;
    static QString screenwidth;

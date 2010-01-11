@@ -38,10 +38,14 @@ public:
   void SetUAList (UAList * ul);
   
   void SetPage (QString url);
+  void Back ();
+  void Blank ();
   
   void Resize (const int wid, const int hi);
   
   void SetFrame (const bool frame);
+  
+  UAList * UserAgentList () { return uaList; }
   
 public slots:
 
@@ -88,7 +92,6 @@ private:
   
   QMenu   userMenu;
   QMenu   settMenu;
-  QMenu   preMenu;
   
   QAction * userQuit;
   QAction * userNevermind;
@@ -96,6 +99,7 @@ private:
   QAction * userSettings;
   QAction * userHelp;
   QAction * userLicense;
+  QAction * userVersion;
   
   QAction * settReload;
   QAction * settNevermind;

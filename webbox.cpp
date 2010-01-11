@@ -41,14 +41,17 @@ WebBox::WebBox ()
   reloadTimer.setParent (this);
   reloadTimer.stop ();
   
-  connect (theButton, SIGNAL (clicked()), this, SLOT (UserWantsSomething()));
-  connect (webView, SIGNAL (loadFinished (bool)),
-           this, SLOT (LoadDone (bool)));
-  connect (webView, SIGNAL (loadStarted ()), 
-           this, SLOT (LoadStarted ()));
-  connect (agentMenu, SIGNAL (UserAgentChange (const UserAgent)),
-            this, SLOT (SetAgent (const UserAgent)));
-  
+  connect (theButton, SIGNAL ( clicked ()), this, SLOT ( UserWantsSomething()));
+  connect (webView, SIGNAL ( loadFinished (bool)),
+           this, SLOT ( LoadDone (bool)));
+  connect (webView, SIGNAL ( loadStarted ()), 
+           this, SLOT ( LoadStarted ()));
+  connect (agentMenu, SIGNAL ( UserAgentChange (const UserAgent)),
+            this, SLOT ( SetAgent (const UserAgent)));
+  connect (agentMenu, SIGNAL ( UserAgentNew ()),
+           newAgent, SLOT ( EditNew ()));
+  connect (agentMenu, SIGNAL ( UserAgentEdit ( const QString )),
+           newAgent, SLOT ( EditAgent (const QString )));
   
 }
 
@@ -66,16 +69,16 @@ WebBox::MakeShortcuts ()
   controlW = new QShortcut (QKeySequence (tr("Ctrl+W")), this);
   controlS = new QShortcut (QKeySequence (tr("Ctrl+S")), this);
   escapeKey = new QShortcut (QKeySequence (Qt::Key_Escape), this);
-  connect (controlB, SIGNAL (activated()), webView, SLOT (back()));
-  connect (controlF, SIGNAL (activated()), webView, SLOT (forward()));
-  connect (controlH, SIGNAL (activated()), this, SLOT (Help()));
-  connect (controlL, SIGNAL (activated()), this, SLOT (EnableNewUrl()));
-  connect (controlO, SIGNAL (activated()), this, SLOT (EnableNewUrl()));
-  connect (controlM, SIGNAL (activated()), this, SLOT (UserWantsSomething()));
-  connect (controlR, SIGNAL (activated()), webView, SLOT (reload()));
-  connect (controlQ, SIGNAL (activated()), this, SLOT (quit()));
-  connect (controlW, SIGNAL (activated()), this, SLOT (ToggleFrame()));
-  connect (controlS, SIGNAL (activated()), this, SLOT (SettingsMenu()));
+  connect (controlB, SIGNAL ( activated ()), webView, SLOT (back()));
+  connect (controlF, SIGNAL ( activated ()), webView, SLOT (forward()));
+  connect (controlH, SIGNAL ( activated ()), this, SLOT (Help()));
+  connect (controlL, SIGNAL ( activated ()), this, SLOT (EnableNewUrl()));
+  connect (controlO, SIGNAL ( activated ()), this, SLOT (EnableNewUrl()));
+  connect (controlM, SIGNAL ( activated ()), this, SLOT (UserWantsSomething()));
+  connect (controlR, SIGNAL ( activated ()), webView, SLOT (reload()));
+  connect (controlQ, SIGNAL ( activated ()), this, SLOT (quit()));
+  connect (controlW, SIGNAL ( activated ()), this, SLOT (ToggleFrame()));
+  connect (controlS, SIGNAL ( activated ()), this, SLOT (SettingsMenu()));
 }
 
 
@@ -83,7 +86,8 @@ void
 WebBox::SetUAList (UAList * ual)
 {
   uaList = ual;
-  agentMenu->Init (agentWidget, uaList);
+  agentMenu->Init ();
+  newAgent->Init (uaList);
 }
 
 
@@ -125,6 +129,18 @@ void
 WebBox::Reload () 
 {
   webView->reload ();
+}
+
+void
+WebBox::Back ()
+{
+  webView->back ();
+}
+
+void
+WebBox::Blank ()
+{
+  SetPage ("about:blank");
 }
 
 void
@@ -203,6 +219,7 @@ WebBox::InitUserMenu ()
   userSettings = userMenu.addAction (tr("Settings..."));
   userHelp = userMenu.addAction (tr("Help..."));
   userLicense = userMenu.addAction (tr("License..."));
+  userVersion = userMenu.addAction (tr("About..."));
 }
 
 void
@@ -243,7 +260,7 @@ WebBox::EnableNewUrl ()
   textEnter->clear ();
   textEnter->setFocus ();
   connect (textCancel, SIGNAL (clicked()), this, SLOT (NewUrlCancel ()));
-  connect (escapeKey, SIGNAL (activated()), this, SLOT (NewUrlCancel ()));
+  connect (escapeKey, SIGNAL ( activated ()), this, SLOT (NewUrlCancel ()));
   connect (textOK, SIGNAL (clicked()), this, SLOT (NewUrlOk ()));
   connect (textEnter, SIGNAL (returnPressed()), this, SLOT (NewUrlOk ()));
 }
@@ -251,13 +268,13 @@ WebBox::EnableNewUrl ()
 void
 WebBox::EditReload ()
 {
-  settBox->setTitle (tr("Reload Timer (secs)"));
+  settTitle->setText (tr("Reload Timer (secs)"));
   settEdit->setText (QString::number (reloadSecs) );
   settBox->show();
   connect (settOK, SIGNAL (clicked()), this, SLOT (ReloadSetup()));
   connect (settCancel, SIGNAL (clicked()), this, SLOT (ReloadNochange()));
   connect (settEdit, SIGNAL (returnPressed()), this, SLOT (ReloadSetup()));
-  connect (escapeKey, SIGNAL (activated()), this, SLOT (ReloadNochange()));
+  connect (escapeKey, SIGNAL ( activated ()), this, SLOT (ReloadNochange()));
 }
 
 void
@@ -330,6 +347,8 @@ WebBox::UserWantsSomething ()
     Help ();
   } else if (userWants == userLicense) {
     License ();
+  } else if (userWants == userVersion) {
+    SetPage ("qrc:/version.html");
   }
 }
 
