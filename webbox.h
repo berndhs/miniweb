@@ -39,6 +39,7 @@ public:
   
   void SetPage (QString url);
   void Back ();
+  void Blank ();
   
   void Resize (const int wid, const int hi);
   
@@ -98,6 +99,7 @@ private:
   QAction * userSettings;
   QAction * userHelp;
   QAction * userLicense;
+  QAction * userVersion;
   
   QAction * settReload;
   QAction * settNevermind;

@@ -59,6 +59,8 @@ private:
   void FillWidget (UserAgent & cur);
   void Connect ();
   void Disconnect ();
+  void Close ();
+  void Open ();
 
   typedef std::map<QListWidgetItem *, QString>   UAIndexType;
   

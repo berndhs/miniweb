@@ -138,6 +138,12 @@ WebBox::Back ()
 }
 
 void
+WebBox::Blank ()
+{
+  SetPage ("about:blank");
+}
+
+void
 WebBox::SetAgent (const UserAgent &ag, const bool setsize)
 {
   curAgent = ag;
@@ -213,6 +219,7 @@ WebBox::InitUserMenu ()
   userSettings = userMenu.addAction (tr("Settings..."));
   userHelp = userMenu.addAction (tr("Help..."));
   userLicense = userMenu.addAction (tr("License..."));
+  userVersion = userMenu.addAction (tr("About..."));
 }
 
 void
@@ -340,6 +347,8 @@ WebBox::UserWantsSomething ()
     Help ();
   } else if (userWants == userLicense) {
     License ();
+  } else if (userWants == userVersion) {
+    SetPage ("qrc:/version.html");
   }
 }
 

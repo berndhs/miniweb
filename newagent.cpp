@@ -76,7 +76,7 @@ void
 NewAgent::OpenWin (QString title)
 {
   if (webBox) {
-    webBox->SetPage ("about:blank");
+    webBox->Blank ();
     webBox->newTitle->setText (title);
   }
   ConnectButtons ();

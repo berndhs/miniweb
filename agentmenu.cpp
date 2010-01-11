@@ -48,6 +48,27 @@ AgentMenu::Init ()
 }
 
 void
+AgentMenu::Close ()
+{
+  hide ();
+  Disconnect ();
+  if (webBox) {
+    webBox->Back ();
+  }
+}
+
+void
+AgentMenu::Open ()
+{
+   Connect ();
+   if (webBox) {
+     webBox->Blank();
+   }
+   show ();
+}
+
+
+void
 AgentMenu::Connect ()
 {
   if (webBox == 0) {
@@ -93,8 +114,8 @@ AgentMenu::Start (const QSize sz, const QPoint where, UserAgent & curAgent)
    listWidget->setGeometry (QRect (listTop, listSize));
    myTopLeft = where;
    mySize = sz;
-   Connect ();
-   show ();
+   
+   Open ();
 }
 
 void
@@ -133,8 +154,7 @@ AgentMenu::FillWidget (UserAgent & cur)
 void
 AgentMenu::ItemPicked (QListWidgetItem * item)
 {
-  hide ();
-  Disconnect ();
+  Close();
   if (listWidget == 0 || agents == 0) {
     return;
   }
@@ -152,8 +172,7 @@ AgentMenu::ItemPicked (QListWidgetItem * item)
 void
 AgentMenu::DoEditCurrent ()
 {
-  hide ();
-  Disconnect ();
+  Close ();
   if (listWidget) {
     QListWidgetItem * item = listWidget->currentItem();
     if (item) {
@@ -168,8 +187,7 @@ AgentMenu::DoEditCurrent ()
 void
 AgentMenu::DoEditNew ()
 {
-  hide ();
-  Disconnect ();
+  Close ();
   emit UserAgentNew ();
 }
 

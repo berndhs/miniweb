@@ -1,0 +1,2 @@
+Miniweb Version 0.1 Jan 11 2010 17:17:15
+Copyright (C) 2010 Bernd H Stramm
