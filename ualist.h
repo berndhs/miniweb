@@ -27,6 +27,7 @@ public:
   
   bool AddAgent (const UserAgent ag);
   bool AddAgent (UserAgent * ag);
+  bool EraseAgent (const QString name);
   
   UserAgent * FindAgent (const QString name);
   UserAgent * First ();

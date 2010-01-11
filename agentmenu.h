@@ -25,6 +25,8 @@
 
 namespace miniweb {
 
+class WebBox;
+
 class AgentMenu : public QWidget {
 
 Q_OBJECT
@@ -33,7 +35,9 @@ public:
 
   AgentMenu (QWidget * parent = 0);
   
-  void Init (QListWidget * widget, UAList * ual);
+  void SetUAList (UAList * ual) { agents = ual; }
+  
+  void Init ();
   void Start (const QSize sz, const QPoint where, UserAgent & curAgent);
   void Hide ();
   
@@ -41,20 +45,27 @@ public slots:
  
   void ItemPicked (QListWidgetItem * item);
   void NothingPicked ();
+  void DoEditCurrent ();
+  void DoEditNew ();
   
 signals:
 
   void UserAgentChange (const UserAgent newAgt);
+  void UserAgentNew ();
+  void UserAgentEdit (const QString agentName);
 
 private:
 
   void FillWidget (UserAgent & cur);
+  void Connect ();
+  void Disconnect ();
 
   typedef std::map<QListWidgetItem *, QString>   UAIndexType;
   
   UAIndexType uaIndex;
   
   QListWidget * listWidget;
+  WebBox      * webBox;
   UAList      * agents;
   QShortcut   * escapeKey;
     

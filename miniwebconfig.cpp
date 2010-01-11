@@ -17,7 +17,6 @@
 namespace miniweb {
 
 QString MiniwebConfig::doctypetag("miniwebcfg");
-QString MiniwebConfig::filetag   ("feedfile");
 QString MiniwebConfig::useragent ("useragent");
 QString MiniwebConfig::soetag   ("saveonexit");
 QString MiniwebConfig::ststag   ("storytextsize");
@@ -31,8 +30,8 @@ MiniwebConfig::MiniwebConfig()
 }
 
 MiniwebConfig::MiniwebConfig (const MiniwebConfig &cfg)
-:bookMarkFile(cfg.bookMarkFile),
- configFile(cfg.configFile),
+:configFile(cfg.configFile),
+ userAgentFile (cfg.userAgentFile),
  saveonexit(cfg.saveonexit),
  running(false),
  storytextsize(cfg.storytextsize)
@@ -43,8 +42,8 @@ MiniwebConfig::MiniwebConfig (const MiniwebConfig &cfg)
 MiniwebConfig &
 MiniwebConfig::operator= (const MiniwebConfig & cfg)
 {
-  bookMarkFile = cfg.bookMarkFile;
   configFile = cfg.configFile;
+  userAgentFile = cfg.userAgentFile;
   saveonexit = cfg.saveonexit;
   running = false;
   storytextsize = cfg.storytextsize;
@@ -56,7 +55,6 @@ void
 MiniwebConfig::SetDefault ()
 {
   QString homedir = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
-  bookMarkFile = homedir + "/.miniweb_marks.xml";
   configFile = homedir + "/.miniweb_cfg.xml";
   userAgentFile = homedir + "/.miniweb_agents.xml";
   saveonexit = true;
@@ -80,11 +78,7 @@ MiniwebConfig::Read ()
   for (QDomElement el = doc.firstChildElement();
        !el.isNull();
        el = el.nextSiblingElement()) {
-    if (el.tagName() == filetag) {
-      if (el.hasAttribute("name")) {
-        SetBookMarkFile(el.attribute("name"));
-      }
-    } if (el.tagName() == useragent) {
+    if (el.tagName() == useragent) {
       if (el.hasAttribute("name")) {
         SetUserAgentFile(el.attribute("name"));
       }
@@ -123,18 +117,11 @@ MiniwebConfig::Write ()
   QDomElement root = dom.documentElement();
   QDomElement el;
   
-  el = dom.createElement (filetag);
-  el.setAttribute ("name", BookMarkFile());
-  root.appendChild (el);
-  
   el = dom.createElement (useragent);
   el.setAttribute ("name", UserAgentFile());
   root.appendChild (el);
   
   QString yesorno;
-  
-  el.setAttribute (boolattr, yesorno);
-  root.appendChild (el);
   
   el = dom.createElement (soetag);
   yesorno = SaveOnExit() ? "yes" : "no";

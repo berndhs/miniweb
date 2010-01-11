@@ -12,6 +12,7 @@
 // of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
 //
 #include "miniwebdebug.h"
+#include "webbox.h"
 
 namespace miniweb {
 
@@ -23,28 +24,66 @@ AgentMenu::AgentMenu (QWidget * parent)
  myTopLeft (QPoint(0,0))
 {
   QWidget::setParent (parent);
+  webBox = dynamic_cast<WebBox*> (parent);
   uaIndex.clear();
   hide ();
 }
 
 void
-AgentMenu::Init (QListWidget * widget, UAList * ual)
+AgentMenu::Init ()
 {
-  listWidget = widget;
-  agents = ual;
+  if (webBox) {
+    listWidget = webBox->agentWidget;
+    agents = webBox->UserAgentList();
+  }
   if (listWidget) {
     connect (listWidget, SIGNAL (itemActivated (QListWidgetItem*)),
              this, SLOT (ItemPicked (QListWidgetItem*)));
     escapeKey = new QShortcut (QKeySequence (Qt::Key_Escape), this);
   }
+  if (webBox) {
+    agents = webBox->UserAgentList ();
+  }
   hide ();
 }
+
+void
+AgentMenu::Connect ()
+{
+  if (webBox == 0) {
+    return;
+  }
+  connect (webBox->agentEditButton, SIGNAL (clicked ()),
+            this, SLOT (DoEditCurrent ()));
+  connect (webBox->agentNewButton , SIGNAL (clicked ()),
+            this, SLOT (DoEditNew ()));
+  connect (escapeKey , SIGNAL (activated()),
+            this, SLOT (NothingPicked()));
+}
+
+void
+AgentMenu::Disconnect ()
+{
+  if (webBox == 0) {
+    return;
+  }
+  disconnect (webBox->agentEditButton, SIGNAL (clicked ()),
+            this, SLOT (DoEditCurrent ()));
+  disconnect (webBox->agentNewButton , SIGNAL (clicked ()),
+            this, SLOT (DoEditNew ()));
+  disconnect (escapeKey , SIGNAL (activated()),
+            this, SLOT (NothingPicked()));
+}
+
 
 void
 AgentMenu::Start (const QSize sz, const QPoint where, UserAgent & curAgent)
 {
    if (listWidget == 0) {
      return;
+   }
+   if (webBox && agents == 0) {
+     agents = webBox->UserAgentList();
    }
    FillWidget (curAgent);
    this->setGeometry (QRect (where, sz));
@@ -54,8 +93,7 @@ AgentMenu::Start (const QSize sz, const QPoint where, UserAgent & curAgent)
    listWidget->setGeometry (QRect (listTop, listSize));
    myTopLeft = where;
    mySize = sz;
-   connect (escapeKey , SIGNAL (activated()),
-            this, SLOT (NothingPicked()));
+   Connect ();
    show ();
 }
 
@@ -96,9 +134,7 @@ void
 AgentMenu::ItemPicked (QListWidgetItem * item)
 {
   hide ();
-  if (escapeKey) {
-    disconnect (escapeKey, 0, 0, 0);
-  }
+  Disconnect ();
   if (listWidget == 0 || agents == 0) {
     return;
   }
@@ -111,6 +147,30 @@ AgentMenu::ItemPicked (QListWidgetItem * item)
       }
     }
   }
+}
+
+void
+AgentMenu::DoEditCurrent ()
+{
+  hide ();
+  Disconnect ();
+  if (listWidget) {
+    QListWidgetItem * item = listWidget->currentItem();
+    if (item) {
+      if (uaIndex.count(item) > 0) {
+        QString key = uaIndex[item];
+        emit UserAgentEdit (key);
+      }
+    }
+  }
+}
+
+void
+AgentMenu::DoEditNew ()
+{
+  hide ();
+  Disconnect ();
+  emit UserAgentNew ();
 }
 
 void
