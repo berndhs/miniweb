@@ -1,0 +1,37 @@
+
+Building from Source Code
+=========================
+
+This program requires the Qt4 toolset. If you don't have Qt, you can 
+get it from 
+
+     http://qt.nokia.com
+     
+Qt4 is available for many platforms. This program has been built on Linux/X11
+and on Windows 32 bit.
+
+Building
+--------
+
+There should be a file named "build.sh". This is a shell script that tries
+to guess if you have the right version of Qt, and if so build the drss program.
+
+Execute build.sh with the command:
+
+$ sh build.sh
+
+
+It will try to compile things for you.
+At the end it will tell you whether this worked or not.
+If it worked, you will have an executable file
+called "miniweb". Copy (or move) this file where you
+keep your executables.
+
+Installing
+----------
+
+It does not matter where you install miniweb, as long as you can find it.
+There are two shell scripts called "localinst.sh" and "systeminst.sh"
+which will install it. Read those trivial scripts, and adjust them
+for your system if needed.
+
