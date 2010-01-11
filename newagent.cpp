@@ -106,9 +106,7 @@ NewAgent::EditNew ()
 void
 NewAgent::EditAgent (QString name, bool isnew)
 {
-qDebug () << " edit agent " << name << " new is " << isnew;
   if (uaList == 0 || webBox == 0) {
-  qDebug () << " ualist " << uaList << " web box " << webBox;
     return;
   }
   QString title (tr("Edit Agent"));
@@ -117,20 +115,17 @@ qDebug () << " edit agent " << name << " new is " << isnew;
   if (isnew || ag == 0) {
     ag = new UserAgent;
     if (ag == 0) {
-    qDebug () << " didnt find " << name;
       return;
     }
     ag->SetID (name);
     title = tr("New Agent");
   }
   newAgent = ag;
-  qDebug () << " all good to edit ";
   webBox->newName->setText (ag->ID());
   webBox->newUAString->setPlainText (ag->UAString());
   webBox->newHeight->setText (QString::number(ag->High()));
   webBox->newWidth->setText (QString::number(ag->Wide()));
   OpenWin (title);
-  qDebug () << " opened " << title;
 }
 
 void 
@@ -142,9 +137,7 @@ NewAgent::DoCancel ()
 void
 NewAgent::DoSave ()
 {
-qDebug () << " saving ";
   if (uaList && webBox) {
-  qDebug() << " save newagent is " << newAgent;
     if (newAgent) {
       newAgent->SetID (webBox->newName->text());
       newAgent->SetUAString (webBox->newUAString->toPlainText());
