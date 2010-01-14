@@ -47,6 +47,7 @@ SOURCES = \
           useragent_ff.cpp \
           agentmenu.cpp \
           newagent.cpp \
+          minidownload.cpp \
           miniwebdebug.cpp
           
 
@@ -61,6 +62,7 @@ HEADERS = \
           useragent_ff.h \
           agentmenu.h \
           newagent.h \
+          minidownload.h \
           miniwebdebug.h
           
 

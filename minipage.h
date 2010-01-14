@@ -14,10 +14,17 @@
 
 #include <QWebPage>
 #include <QString>
+#include <QNetworkRequest>
+#include <QUrl>
+#include "miniwebdebug.h"
+#include "minidownload.h"
+#include <set>
 
 namespace miniweb {
 
 class MiniPage : public QWebPage {
+
+Q_OBJECT 
 
 public:
 
@@ -28,12 +35,26 @@ public:
    void SetUAString (const QString uas);
    void ToggleScroll ();
 
+public slots:
+
+   void DownloadRequested (const QNetworkRequest & req);
+   void StatusBar (const QString & msg);
+   void HandleLinkClick (const QUrl & url);
+   void CleanupDownload (const MiniDownload * dl, const bool ok);
+
 private:
 
    void SetScroll ();
+   void AskDownload (const QUrl & url, QString & destFile, bool & doLoad);
+   bool IsDownloadable (const QString & name);
+   void StartDownload (const QNetworkRequest & req, const QString & filename);
 
    QString agentString;
    bool    haveScrollbar;
+   
+   typedef std::set <MiniDownload *> DownloadSetType;
+   
+   DownloadSetType    downloadSet;
 
 };
 
