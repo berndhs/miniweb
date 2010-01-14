@@ -22,7 +22,6 @@ MiniDownload::Finished ()
   disconnect (reply, 0, this, 0);
   QFile target (targetFile);
   bool ok = target.open (QFile::WriteOnly);
-  qDebug () << " copying reply to file " << targetFile;
   if (ok) {
     QByteArray byteBuf;
     int inChunk  (0);
@@ -35,12 +34,10 @@ MiniDownload::Finished ()
         outChunk = target.write (byteBuf);
         ok &= inChunk == outChunk;
       }
-      qDebug () << " chunk size " << outChunk;
     } while (inChunk > 0 && outChunk > 0 && ok);
   }
   target.close();
   reply->close();
-  qDebug () << " copy was " << ok;
   emit DownloadFinished (this, ok);
 }
 

@@ -38,7 +38,6 @@ public:
 public slots:
 
    void DownloadRequested (const QNetworkRequest & req);
-   void StatusBar (const QString & msg);
    void HandleLinkClick (const QUrl & url);
    void CleanupDownload (const MiniDownload * dl, const bool ok);
 

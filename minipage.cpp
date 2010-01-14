@@ -28,8 +28,6 @@ MiniPage::MiniPage (QObject * parent)
            this, SLOT (HandleLinkClick (const QUrl &)));
   connect (this, SIGNAL (downloadRequested (const QNetworkRequest &)),
            this, SLOT (DownloadRequested (const QNetworkRequest &)));
-  connect (this, SIGNAL (statusBarMessage (const QString &)),
-           this, SLOT (StatusBar (const QString &)));
 }
 
 QString
@@ -70,8 +68,6 @@ MiniPage::SetScroll ()
 void
 MiniPage::DownloadRequested (const QNetworkRequest & req)
 {
-  qDebug () << " download requested";
-  qDebug () << " destination url " << req.url().toString ();
   bool loadit(false);
   QString filename;
   AskDownload (req.url(), filename,loadit);
@@ -80,11 +76,6 @@ MiniPage::DownloadRequested (const QNetworkRequest & req)
   }
 }
 
-void
-MiniPage::StatusBar (const QString & msg)
-{
-  qDebug () << "status bar message " << msg;
-}
 
 bool MiniPage::IsDownloadable (const QString & name)
 {
@@ -101,7 +92,6 @@ MiniPage::HandleLinkClick (const QUrl & url)
 {
   QString urlStr = url.toString ();
   if (IsDownloadable(urlStr)) {
-    qDebug () << " try to download " << urlStr;
     bool loadit (false);
     QString filename;
     AskDownload (url, filename, loadit);
@@ -109,12 +99,9 @@ MiniPage::HandleLinkClick (const QUrl & url)
       StartDownload (QNetworkRequest(url), filename);
     }
   } else {
-    qDebug () << " try to load as page " << urlStr;
     QWebView * pView = dynamic_cast <QWebView*> (this->view());
     if (pView) {
       pView->load (url);
-    } else {
-      qDebug () << " no WebView pointer";
     }
   }
 }
@@ -128,7 +115,6 @@ MiniPage::AskDownload (const QUrl & url, QString & filename, bool & doit)
   QString file = QFileDialog::getSaveFileName (this->view(),
                  tr("Save this file? ") + url.toString(),
                  name );
-  qDebug () << " they want to put it in " << file;
   filename = file;
   doit = file.length() > 0;
 }
@@ -138,7 +124,6 @@ MiniPage::StartDownload (const QNetworkRequest & req, const QString & filename)
 {
   QNetworkAccessManager * mgr = this->networkAccessManager ();
   if (mgr == 0) {
-  qDebug () << " no manager ! " ;
     return;
   }
   QNetworkReply * reply = mgr->get (req);
@@ -155,11 +140,6 @@ void
 MiniPage::CleanupDownload (const MiniDownload * dl, const bool ok)
 {
   MiniDownload *myDl = const_cast<MiniDownload*>(dl);
-  if (ok) {
-    qDebug () << " download worked for file " << myDl->Target();
-  } else {
-    qDebug () << " download failed for " << myDl->Target();
-  }
   disconnect (dl, 0, this, 0);
   downloadSet.erase (myDl);
 }
