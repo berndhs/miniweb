@@ -13,14 +13,19 @@
 //
 
 #include <QWebPage>
+#include <QWidget>
 #include <QString>
 #include <QNetworkRequest>
 #include <QUrl>
+#include <QLabel>
+#include <QLineEdit>
 #include "miniwebdebug.h"
 #include "minidownload.h"
 #include <set>
 
 namespace miniweb {
+
+class WebBox;
 
 class MiniPage : public QWebPage {
 
@@ -28,7 +33,7 @@ Q_OBJECT
 
 public:
 
-   MiniPage (QObject * parent);
+   MiniPage (QWidget * parent);
    
    QString userAgentForUrl ( const QUrl & url ) const;
    
@@ -40,7 +45,14 @@ public slots:
    void DownloadRequested (const QNetworkRequest & req);
    void HandleLinkClick (const QUrl & url);
    void CleanupDownload (const MiniDownload * dl, const bool ok);
+   void HoverLink (const QString & link, const QString & title, const QString & text);
+   
+   void CatchShowLink (const QPoint here, const QString link, QWidget * pW);
+   
+signals:
 
+   void ShowLink (const QPoint here, const QString link, QWidget * pW);
+   
 private:
 
    void SetScroll ();
@@ -54,6 +66,11 @@ private:
    typedef std::set <MiniDownload *> DownloadSetType;
    
    DownloadSetType    downloadSet;
+   
+   QWidget  *pParent;
+   WebBox   *boxParent;
+   
+   QLineEdit *linkTip;
 
 };
 

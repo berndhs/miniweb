@@ -1,9 +1,11 @@
 #include "minipage.h"
+#include "webbox.h"
 #include <QWebFrame>
 #include <QWebView>
 #include <QFileDialog>
 #include <QFileInfo>
 #include <QNetworkAccessManager>
+#include <QCursor>
 
 //
 //  Copyright (C) 2010 - Bernd H Stramm 
@@ -18,16 +20,24 @@
 
 namespace miniweb {
 
-MiniPage::MiniPage (QObject * parent)
+
+MiniPage::MiniPage (QWidget * parent)
 {
   setParent (parent);
+  pParent = parent;
+  boxParent = dynamic_cast<WebBox*>(parent);
   haveScrollbar = false;
   SetScroll ();
+  linkTip = 0;
   setLinkDelegationPolicy (DelegateExternalLinks);
   connect (this, SIGNAL (linkClicked (const QUrl &)),
            this, SLOT (HandleLinkClick (const QUrl &)));
   connect (this, SIGNAL (downloadRequested (const QNetworkRequest &)),
            this, SLOT (DownloadRequested (const QNetworkRequest &)));
+  connect (this, SIGNAL (linkHovered (const QString &, const QString &, const QString &)),
+           this, SLOT (HoverLink (const QString &, const QString &, const QString &)));
+  connect (this, SIGNAL (ShowLink (const QPoint, const QString, QWidget *)),
+           this, SLOT (CatchShowLink (const QPoint, const QString, QWidget *)));
 }
 
 QString
@@ -144,5 +154,41 @@ MiniPage::CleanupDownload (const MiniDownload * dl, const bool ok)
   downloadSet.erase (myDl);
 }
 
+void
+MiniPage::CatchShowLink (const QPoint here, const QString link, QWidget * pW)
+{
+  static bool isOn (false);
+  bool empty = (link == "");
+  if (!empty && !isOn) {
+    QString padlink (link);
+    padlink.prepend (' ');
+    padlink.append (' ');
+    if (linkTip == 0) {
+      linkTip = new QLineEdit (padlink,pW);
+      linkTip->setReadOnly (true);
+      linkTip->setFrame (false);
+    } else {
+      linkTip->setText (padlink);
+    }
+    QFontMetrics fm = linkTip->fontMetrics();
+    QSize sz = fm.size (0,padlink);
+    linkTip->resize (sz);
+    QPoint local (pW->mapFromGlobal (here));
+    linkTip->move (local);
+    linkTip->show ();
+    isOn = true;
+  } else if (empty && isOn) {
+    if (linkTip) {
+      linkTip->hide();
+    }
+    isOn = false;
+  }
+}
+
+void 
+MiniPage::HoverLink (const QString & link, const QString & title, const QString & text)
+{
+  emit ShowLink (QCursor::pos(), link, pParent);
+}
 
 } // namespace
