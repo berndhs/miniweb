@@ -2,9 +2,22 @@
 # 
 # Build Script for miniweb
 #
+# //
+# //  Copyright (C) 2010 - Bernd H Stramm 
+# //
+# // This program is distributed under the terms of 
+# // the GNU General Public License version 3 
+# //
+# // This software is distributed in the hope that it will be useful, 
+# // but WITHOUT ANY WARRANTY; without even the implied warranty 
+# // of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+# //
+
 
 TARGET=miniweb
 DOT_PRO_FILE=$TARGET.pro
+LOCALMAKE=Make_Q
+MAKE=make
 
 QM=`which qmake`
 QM4=`which qmake-qt4`
@@ -54,12 +67,12 @@ then
   exit 1
 fi
 
-make clean
+$MAKE -f $LOCALMAKE clean
 echo
 echo Try to compile $TARGET
 echo
 
-make release
+$MAKE -f $LOCALMAKE release
 
 if [ -e $TARGET ] 
 then

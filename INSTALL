@@ -14,7 +14,7 @@ Building
 --------
 
 There should be a file named "build.sh". This is a shell script that tries
-to guess if you have the right version of Qt, and if so build the drss program.
+to guess if you have the right version of Qt, and if so build the miniweb program.
 
 Execute build.sh with the command:
 

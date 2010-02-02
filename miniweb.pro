@@ -22,6 +22,8 @@ QT	+= core gui xml network webkit
 RESOURCES	+= miniweb.qrc
 
 FORMS	+= webbox.ui \
+
+MAKEFILE = Make_Q
 	
 
 TRANSLATIONS	= 
