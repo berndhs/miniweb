@@ -16,9 +16,9 @@ Copyright (C) 2009 Bernd H Stramm
 
 --------------------------------------------------- 
 
-Along with this program some standard libraries are 
-installed which are covered by the respective
-manufaturers' licenses. 
+Along with this program some standard libraries may
+be installed which are covered by the respective
+manufacturers' licenses. 
 
 
 ====================================================
