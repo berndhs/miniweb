@@ -16,6 +16,9 @@
 PRO_FILE = miniweb.pro
 MAKEFILE = MakeMini
 TOP_MAKEFILE = Makefile
+TARGET = miniweb
+
+first: release
 
 all: $(MAKEFILE)
 	make -f $(MAKEFILE) all
@@ -34,11 +37,11 @@ debug: $(MAKEFILE) FORCE
 release: $(MAKEFILE) FORCE
 	make -f $(MAKEFILE) release
 
-install: all FORCE
-	sh install.sh $(DESTDIR)
+install: release FORCE
+	install -s -p $(TARGET) $(DESTDIR)
 
-userinstall:
-	sh install.sh $(HOME)/bin
+userinstall: release FORCE
+	install -s -p $(TARGET) $(HOME)/bin
 
 qmake: 
 	$(QMAKE) $(PRO_FILE)

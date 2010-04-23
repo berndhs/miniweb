@@ -70,7 +70,6 @@ echo "# ${COPYRIGHT}" >> Makefile
 echo "#" >> Makefile
 echo "PREFIX=${PREFIX}" >> Makefile
 echo "DESTDIR=\${PREFIX}/bin" >> Makefile
-echo "QMAKE = qmake" >> Makefile
 echo "QMAKE = $QM" >> Makefile
 cat Makefile.in >> Makefile
 echo ""
