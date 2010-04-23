@@ -20,7 +20,7 @@
    <string>MiniWeb View</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="miniweb.qrc">
+   <iconset resource="../miniweb.qrc">
     <normaloff>:/mwlogo.png</normaloff>:/mwlogo.png</iconset>
   </property>
   <widget class="QWebView" name="webView">
@@ -909,18 +909,18 @@
   <customwidget>
    <class>miniweb::AgentMenu</class>
    <extends>QWidget</extends>
-   <header location="global">agentmenu.h</header>
+   <header location="global">../src/agentmenu.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>miniweb::NewAgent</class>
    <extends>QWidget</extends>
-   <header location="global">newagent.h</header>
+   <header location="global">../src/newagent.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="miniweb.qrc"/>
+  <include location="../miniweb.qrc"/>
  </resources>
  <connections/>
 </ui>

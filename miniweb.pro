@@ -21,9 +21,9 @@ QT	+= core gui xml network webkit
 
 RESOURCES	+= miniweb.qrc
 
-FORMS	+= webbox.ui \
+FORMS	+= ui/webbox.ui \
 
-MAKEFILE = Make_Q
+MAKEFILE = MakeMini
 	
 
 TRANSLATIONS	= 
@@ -43,33 +43,33 @@ CONFIG(debug, debug|release) {
 
 
 SOURCES	=  \
-	cmdoptions.cpp \
-	minimain.cpp \
-	miniwebconfig.cpp \
-	minipage.cpp \
-	webbox.cpp \
-	version.cpp \
-	ualist.cpp \
-	useragent.cpp \
-	useragent_ff.cpp \
-	agentmenu.cpp \
-	newagent.cpp \
-	minidownload.cpp \
-	miniwebdebug.cpp
+	src/cmdoptions.cpp \
+	src/minimain.cpp \
+	src/miniwebconfig.cpp \
+	src/minipage.cpp \
+	src/webbox.cpp \
+	src/version.cpp \
+	src/ualist.cpp \
+	src/useragent.cpp \
+	src/useragent_ff.cpp \
+	src/agentmenu.cpp \
+	src/newagent.cpp \
+	src/minidownload.cpp \
+	src/miniwebdebug.cpp
 
 
 HEADERS	=  \
-	cmdoptions.h \
-	miniwebconfig.h \
-	minipage.h \
-	webbox.h \
-	version.h \
-	ualist.h \
-	useragent.h \
-	useragent_ff.h \
-	agentmenu.h \
-	newagent.h \
-	minidownload.h \
-	miniwebdebug.h
+	src/cmdoptions.h \
+	src/miniwebconfig.h \
+	src/minipage.h \
+	src/webbox.h \
+	src/version.h \
+	src/ualist.h \
+	src/useragent.h \
+	src/useragent_ff.h \
+	src/agentmenu.h \
+	src/newagent.h \
+	src/minidownload.h \
+	src/miniwebdebug.h
 
 

@@ -17,7 +17,7 @@
 
 namespace miniweb {
 
-  std::string ProgramVersion("0.2pre");
+  std::string ProgramVersion("0.2");
 
   std::string ProgramName("Miniweb");
   std::string copyright ("Copyright (C) 2010 Bernd H Stramm");
